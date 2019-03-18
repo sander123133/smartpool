@@ -1,4 +1,4 @@
-package com.example.smartpool;
+package com.example.smartpool.Domain;
 
 public class AutoInfo {
 
