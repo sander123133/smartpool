@@ -15,13 +15,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_detailview_ritinformatie);
 
         Database db = new Database(this);
         db.createTestData();
 
 
-        final FloatingActionButton button =  findViewById(R.id.button);
+        /**final FloatingActionButton button =  findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+         **/
 
 
     }
