@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 
 import com.example.smartpool.Domain.AutoInfo;
+import com.example.smartpool.Domain.Medewerkerinfo;
 import com.example.smartpool.Domain.RitInfo;
 import com.example.smartpool.R;
 
@@ -40,6 +41,8 @@ public class AddActivity extends AppCompatActivity {
                 EditText etKleur = findViewById(R.id.etKleur);
 
                 AutoInfo autoInfo = new AutoInfo(etKenteken.getText().toString(), etMerk.getText().toString(), etKleur.getText().toString());
+
+
 
                 Intent go = new Intent(AddActivity.this, MainActivity.class);
                 startActivity(go);

@@ -5,12 +5,22 @@ String gebruikersnaam;
 int creditaantal;
 String telefoonnumer;
 Carpoolcategorie carpoolcategorie;
+String datum;
 
-    public Medewerkerinfo(String gebruikersnaam, int creditaantal, Carpoolcategorie carpoolcategorie, String telefoonnumer) {
+    public Medewerkerinfo(String gebruikersnaam, int creditaantal, Carpoolcategorie carpoolcategorie, String telefoonnumer, String datum) {
         this.gebruikersnaam = gebruikersnaam;
         this.creditaantal = creditaantal;
         this.carpoolcategorie = carpoolcategorie;
         this.telefoonnumer = telefoonnumer;
+        this.datum = datum;
+    }
+
+    public String getDatum() {
+        return datum;
+    }
+
+    public void setDatum(String datum) {
+        this.datum = datum;
     }
 
     public String getGebruikersnaam() {
