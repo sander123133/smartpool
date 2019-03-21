@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.smartpool.Domain.AutoInfo;
 import com.example.smartpool.Domain.BeloningWaardeCredit;
 import com.example.smartpool.Domain.RitInfo;
 
@@ -270,6 +271,33 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<RitInfo> geefRitInfo() {
+
+        ArrayList<RitInfo> ritInfoArrayList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + RITINFO_TABEL_NAAM + ";", null);
+        res.moveToFirst();
+
+        while (!res.isAfterLast()){
+
+            RitInfo ri = new RitInfo();
+
+            ri.setOpstapplaats(res.getString(res.getColumnIndex(RITINFO_KOLOM_OPSTAPPLAATS)));
+            ri.setEindbestmming(res.getString(res.getColumnIndex(RITINFO_KOLOM_EINDBESTEMMING)));
+            ri.setDatum(res.getString(res.getColumnIndex(RITINFO_KOLOM_DATUM)));
+            ri.setTijdHeen(res.getString(res.getColumnIndex(RITINFO_KOLOM_STARTTIJD)));
+            ri.setTijdTerug(res.getString(res.getColumnIndex(RITINFO_KOLOM_TIJD_TERUGRIJDEN)));
+            ri.setVrijePlaatsen(res.getInt(res.getColumnIndex(RITINFO_KOLOM_OPEN_PLAATSEN)));
+            ri.setGebruikersnaam(res.getString(res.getColumnIndex(RITINFO_KOLOM_GEBRUIKERSNAAM)));
+            ri.setStatus(res.getString(res.getColumnIndex(RITINFO_KOLOM_STATUS)));
+            ri.setKenteken(res.getString(res.getColumnIndex(RITINFO_KOLOM_KENTEKEN)));
+            ri.setQrCode(res.getString(res.getColumnIndex(RITINFO_KOLOM_QRCODE)));
+        }
+        close();
+        return ritInfoArrayList;
+    }
+
     public boolean insertBeloning(BeloningWaardeCredit beloningWaardeCredit){
 
         Log.d(TAG, "insertBeloning: aangeroepen");
@@ -292,6 +320,54 @@ public class Database extends SQLiteOpenHelper {
 
         return  true;
 
+    }
+
+    public boolean insertAutoInfo(AutoInfo autoInfo) {
+
+        Log.d(TAG, "insertAutoInfo: aangeroepen");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(AUTOINFO_KOLOM_KENTEKEN, autoInfo.getKenteken());
+        contentValues.put(AUTOINFO_KOLOM_KLEUR, autoInfo.getKleur());
+        contentValues.put(AUTOINFO_KOLOM_MERK, autoInfo.getMerk());
+
+        Log.d(TAG, "insert autoinfo: " + autoInfo.getKenteken());
+
+        db.insert(AUTOINFO_TABEL_NAAM, null, contentValues);
+        close();
+
+
+        return  true;
+
+    }
+
+    public boolean insertRitInfo(RitInfo ritInfo) {
+
+        Log.d(TAG, "insertRitInfo: aangeroepen");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(RITINFO_KOLOM_DATUM, ritInfo.getDatum());
+        contentValues.put(RITINFO_KOLOM_EINDBESTEMMING, ritInfo.getEindbestmming());
+        contentValues.put(RITINFO_KOLOM_GEBRUIKERSNAAM, ritInfo.getGebruikersnaam());
+        contentValues.put(RITINFO_KOLOM_KENTEKEN, ritInfo.getKenteken());
+        contentValues.put(RITINFO_KOLOM_OPEN_PLAATSEN, ritInfo.getVrijePlaatsen());
+        contentValues.put(RITINFO_KOLOM_OPSTAPPLAATS, ritInfo.getOpstapplaats());
+        contentValues.put(RITINFO_KOLOM_QRCODE, ritInfo.getQrCode());
+        contentValues.put(RITINFO_KOLOM_STARTTIJD, ritInfo.getTijdHeen());
+        contentValues.put(RITINFO_KOLOM_STATUS, ritInfo.getStatus());
+        contentValues.put(RITINFO_KOLOM_TIJD_TERUGRIJDEN, ritInfo.getTijdTerug());
+
+        Log.d(TAG, "insert ritinfo: " + ritInfo.getKenteken());
+
+        db.insert(RITINFO_TABEL_NAAM, null, contentValues);
+        close();
+
+
+        return  true;
     }
 
     public void createTestData(){

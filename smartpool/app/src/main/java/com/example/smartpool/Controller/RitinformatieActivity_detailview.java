@@ -39,11 +39,12 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         eindbestemming.setText(ritten.get(0).getEindbestmming());
         openplaatsen.setText(String.valueOf(ritten.get(0).getVrijePlaatsen()));
         eindTijd.setText(ritten.get(0).getTijdTerug());
-
+        
         ListView gebruikersListview = findViewById(R.id.activity_detailview_ritinformatie_gebruikers_list);
         ArrayList<Medewerkerinfo> medewerkerinfos = new ArrayList<>();
 
         gebruikersListview.setAdapter(new Detailview_ArrayAdapter(this, R.layout.listview_adpater_ritinformatie_detaivliew, medewerkerinfos));
+
 
     }
 }
