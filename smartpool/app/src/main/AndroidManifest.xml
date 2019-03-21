@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".Controller.LoginActivity">
+        <activity android:name=".Controller.AddActivity">
 
 
             <intent-filter>
@@ -20,10 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.AddActivity"></activity>
+
         <activity android:name=".Controller.GifsthopDetailActivity" />
         <activity android:name=".Controller.BeloningOverzichtActivity" />
         <activity android:name=".Controller.Register"/>
+        <activity android:name=".Controller.MainActivity" />
     </application>
 
 </manifest>
