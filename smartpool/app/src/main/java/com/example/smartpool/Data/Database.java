@@ -395,12 +395,6 @@ public class Database extends SQLiteOpenHelper {
 
 
         }
-        ArrayList<RitInfo> ritten = genereerRitten();
-        for (RitInfo rit : ritten)
-        {
-            insertRit(rit);
-        }
-
 
         Log.d(TAG, "createTestData: Testdata is already available.");
         close();
@@ -435,45 +429,9 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<RitInfo> getRitten()
-    {
-      ArrayList<RitInfo> ritten = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + RITINFO_TABEL_NAAM + ";", null);
-        res.moveToFirst();
-        while(!res.isAfterLast()){
-            RitInfo ritInfo = new RitInfo(null,null,null,null,null,0);
-            ritInfo.setDatum(res.getString(res.getColumnIndex(RITINFO_KOLOM_DATUM)));
-            ritInfo.setEindbestmming(res.getString(res.getColumnIndex(RITINFO_KOLOM_EINDBESTEMMING)));
-            ritInfo.setOpstapplaats(res.getString(res.getColumnIndex(RITINFO_KOLOM_OPSTAPPLAATS)));
-            ritInfo.setTijdHeen(res.getString(res.getColumnIndex(RITINFO_KOLOM_STARTTIJD)));
-            ritInfo.setTijdTerug(res.getString(res.getColumnIndex(RITINFO_KOLOM_TIJD_TERUGRIJDEN)));
-            ritInfo.setVrijePlaatsen(res.getInt(res.getColumnIndex(RITINFO_KOLOM_OPEN_PLAATSEN)));
-            ritten.add(ritInfo);
-            res.moveToNext();
 
 
-        }
 
-        close();
-        return  ritten;
-
-    }
-
-    public ArrayList<RitInfo> genereerRitten()
-    {
-        ArrayList<RitInfo> ritten = new ArrayList<>();
-
-        RitInfo ritInfo = new RitInfo(
-                "Bergen op zoom", "borchwerf roosendaal", "12/14/2018", "07:00",
-                "17:00", 3
-        );
-        ritten.add(ritInfo);
-
-        return ritten;
-
-
-    }
 
     public void insertRit(RitInfo ritInfo)
     {

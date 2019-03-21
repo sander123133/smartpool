@@ -31,6 +31,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         TextView kenteken = findViewById(R.id.detail_ritinformatieActivity_kentekenInput_txt);
 
         database.createTestData();
+        /*
         ArrayList<RitInfo>  ritten = database.getRitten();
 
         beginTijd.setText(ritten.get(0).getTijdHeen());
@@ -44,7 +45,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         ArrayList<Medewerkerinfo> medewerkerinfos = new ArrayList<>();
 
         gebruikersListview.setAdapter(new Detailview_ArrayAdapter(this, R.layout.listview_adpater_ritinformatie_detaivliew, medewerkerinfos));
-
+        */
 
     }
 }

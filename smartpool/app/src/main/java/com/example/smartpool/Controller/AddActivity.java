@@ -22,7 +22,6 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_main);
-
         final Button btnSave = findViewById(R.id.btnSave);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
