@@ -15,9 +15,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        final FloatingActionButton button =  findViewById(R.id.button);
+        final FloatingActionButton fabToevoegen =  findViewById(R.id.fabToevoegen);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        fabToevoegen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent go = new Intent(MainActivity.this, AddActivity.class);
                 startActivity(go);
