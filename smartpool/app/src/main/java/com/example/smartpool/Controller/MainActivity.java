@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         db.createTestData();
 
 
-        /**final FloatingActionButton button =  findViewById(R.id.button);
+        final FloatingActionButton button =  findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-         **/
+
 
 
     }
