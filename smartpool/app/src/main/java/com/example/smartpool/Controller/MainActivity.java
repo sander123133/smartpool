@@ -45,7 +45,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main_activity_container);
+
+
+        Database db = new Database(this);
+        db.createTestData();
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -53,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RitoverzichtFragment()).commit();
         getSupportActionBar().setTitle("Ritten");
 
-        Database db = new Database(this);
-        db.createTestData();
 
-   }
+
+    }
+
 }
