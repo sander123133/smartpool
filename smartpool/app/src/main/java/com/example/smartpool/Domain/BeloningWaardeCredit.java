@@ -11,6 +11,9 @@ public class BeloningWaardeCredit implements Serializable {
     private String foto;
     private String WebsiteURL;
 
+    public BeloningWaardeCredit() {
+    }
+
     public BeloningWaardeCredit(String beloningsnaam, double waarde, int creditaantal, String beschrijving, String foto, String websiteURL) {
         this.beloningsnaam = beloningsnaam;
         this.waarde = waarde;

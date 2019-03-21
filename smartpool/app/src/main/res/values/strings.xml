@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">smartpool</string>
+    <string name="naam_beloning">Naam beloning</string>
+    <string name="waarde">Waarde</string>
+    <string name="aantal_credits">Aantal credits:</string>
+    <string name="aantal_credits_te_besteden">Aantal credits te besteden:</string>
 </resources>

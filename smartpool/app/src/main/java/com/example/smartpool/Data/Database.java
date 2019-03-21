@@ -240,6 +240,35 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<BeloningWaardeCredit> geefAlleBeloningen(){
+
+        ArrayList<BeloningWaardeCredit> beloningen = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + BWC_TABEL_NAAM + ";", null);
+        res.moveToFirst();
+
+        while (!res.isAfterLast()){
+
+            BeloningWaardeCredit bwc = new BeloningWaardeCredit();
+
+            //waarden in bwc object stoppen
+            bwc.setBeloningsnaam(res.getString(res.getColumnIndex(BWC_KOLOM_BELONINGSNAAM)));
+            bwc.setBeschrijving(res.getString(res.getColumnIndex(BWC_KOLOM_BESCHRIJVING)));
+            bwc.setCreditaantal(res.getInt(res.getColumnIndex(BWC_KOLOM_CREDITAANTAL)));
+            bwc.setWaarde(res.getDouble(res.getColumnIndex(BWC_KOLOM_WAARDE)));
+            bwc.setWebsiteURL(res.getString(res.getColumnIndex(BWC_KOLOM_WEBSITEURL)));
+            bwc.setFoto(res.getString(res.getColumnIndex(BWC_KOLOM_FOTO)));
+
+            beloningen.add(bwc);
+            res.moveToNext();
+        }
+
+        close();
+        return beloningen;
+
+    }
+
     public boolean insertBeloning(BeloningWaardeCredit beloningWaardeCredit){
 
         Log.d(TAG, "insertBeloning: aangeroepen");
