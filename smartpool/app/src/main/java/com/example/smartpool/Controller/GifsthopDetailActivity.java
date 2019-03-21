@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.smartpool.Domain.BeloningWaardeCredit;
 import com.example.smartpool.R;
-import com.squareup.picasso.Picasso;
 
 public class GifsthopDetailActivity extends AppCompatActivity {
 
@@ -40,7 +39,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
         mOmschrijving.setText(bwc.getBeschrijving());
         mCreditAantal.setText(Integer.toString(bwc.getCreditaantal()));
         mLinkWebsite.setText(bwc.getWebsiteURL());
-        Picasso.with(this).load(bwc.getFoto()).into(mBeloningFoto);
+        //Picasso.with(this).load(bwc.getFoto()).into(mBeloningFoto);
 
         btnCreditsInwisselen.setOnClickListener(new View.OnClickListener() {
             @Override

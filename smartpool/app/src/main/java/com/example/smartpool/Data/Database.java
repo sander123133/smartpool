@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.smartpool.Domain.BeloningWaardeCredit;
+import com.example.smartpool.Domain.RitInfo;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class Database extends SQLiteOpenHelper {
     private final String TAG = getClass().getSimpleName();
 
     private static final String DB_NAME = "smartpoolDB";
-    private static final int DB_V = 1;
+    private static final int DB_V = 2;
 
     //tabel en kolomnamen
     //tabel MedewerkerInfo
@@ -68,8 +69,8 @@ public class Database extends SQLiteOpenHelper {
     private static final String RITINFO_KOLOM_EINDBESTEMMING = "Eindbestemming";
     private static final String RITINFO_KOLOM_DATUM = "Datum";
     private static final String RITINFO_KOLOM_STARTTIJD = "Starttijd";
-    private static final String RITINFO_KOLOM_OPEN_PLAATSEN = "Open plaatsen";
-    private static final String RITINFO_KOLOM_TIJD_TERUGRIJDEN = "Tijd terugrijden";
+    private static final String RITINFO_KOLOM_OPEN_PLAATSEN = "Openplaatsen";
+    private static final String RITINFO_KOLOM_TIJD_TERUGRIJDEN = "Tijdterugrijden";
     private static final String RITINFO_KOLOM_STATUS = "Status";
     private static final String RITINFO_KOLOM_KENTEKEN = "Kenteken";
     private static final String RITINFO_KOLOM_QRCODE = "qrcode";
@@ -307,6 +308,7 @@ public class Database extends SQLiteOpenHelper {
 
             ArrayList<BeloningWaardeCredit> beloningen = genereerBeloningen();
 
+
             //geen data -> maak aan
             Log.d(TAG, "createTestData: Creating BeloningWaardeCredit TEST DATA");
             SQLiteDatabase db = getWritableDatabase();
@@ -314,7 +316,15 @@ public class Database extends SQLiteOpenHelper {
             for(BeloningWaardeCredit bwc: beloningen){
                 insertBeloning(bwc);
             }
+
+
         }
+        ArrayList<RitInfo> ritten = genereerRitten();
+        for (RitInfo rit : ritten)
+        {
+            insertRit(rit);
+        }
+
 
         Log.d(TAG, "createTestData: Testdata is already available.");
         close();
@@ -348,5 +358,77 @@ public class Database extends SQLiteOpenHelper {
         return beloningen;
 
     }
+
+    public ArrayList<RitInfo> getRitten()
+    {
+      ArrayList<RitInfo> ritten = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + RITINFO_TABEL_NAAM + ";", null);
+        res.moveToFirst();
+        while(!res.isAfterLast()){
+            RitInfo ritInfo = new RitInfo(null,null,null,null,null,0);
+            ritInfo.setDatum(res.getString(res.getColumnIndex(RITINFO_KOLOM_DATUM)));
+            ritInfo.setEindbestmming(res.getString(res.getColumnIndex(RITINFO_KOLOM_EINDBESTEMMING)));
+            ritInfo.setOpstapplaats(res.getString(res.getColumnIndex(RITINFO_KOLOM_OPSTAPPLAATS)));
+            ritInfo.setTijdHeen(res.getString(res.getColumnIndex(RITINFO_KOLOM_STARTTIJD)));
+            ritInfo.setTijdTerug(res.getString(res.getColumnIndex(RITINFO_KOLOM_TIJD_TERUGRIJDEN)));
+            ritInfo.setVrijePlaatsen(res.getInt(res.getColumnIndex(RITINFO_KOLOM_OPEN_PLAATSEN)));
+            ritten.add(ritInfo);
+            res.moveToNext();
+
+
+        }
+
+        close();
+        return  ritten;
+
+    }
+
+    public ArrayList<RitInfo> genereerRitten()
+    {
+        ArrayList<RitInfo> ritten = new ArrayList<>();
+
+        RitInfo ritInfo = new RitInfo(
+                "Bergen op zoom", "borchwerf roosendaal", "12/14/2018", "07:00",
+                "17:00", 3
+        );
+        ritten.add(ritInfo);
+
+        return ritten;
+
+
+    }
+
+    public void insertRit(RitInfo ritInfo)
+    {
+        Log.d(TAG, "insertBeloning: aangeroepen");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(RITINFO_KOLOM_DATUM, ritInfo.getDatum());
+        contentValues.put(RITINFO_KOLOM_EINDBESTEMMING, ritInfo.getEindbestmming());
+        contentValues.put(RITINFO_KOLOM_OPSTAPPLAATS, ritInfo.getOpstapplaats());
+        contentValues.put(RITINFO_KOLOM_STARTTIJD, ritInfo.getTijdHeen());
+        contentValues.put(RITINFO_KOLOM_TIJD_TERUGRIJDEN, ritInfo.getTijdTerug());
+        contentValues.put(RITINFO_KOLOM_DATUM, ritInfo.getDatum());
+        contentValues.put(RITINFO_KOLOM_OPEN_PLAATSEN, ritInfo.getVrijePlaatsen());
+        contentValues.put(RITINFO_KOLOM_QRCODE, "nee");
+        contentValues.put(RITINFO_KOLOM_GEBRUIKERSNAAM, "bleh1234");
+        contentValues.put(RITINFO_KOLOM_STATUS, "verhinderd");
+        contentValues.put(RITINFO_KOLOM_KENTEKEN, "12-345-67");
+
+
+        try {
+            db.insert(RITINFO_TABEL_NAAM, null, contentValues);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        close();
+    }
+
+
 
 }
