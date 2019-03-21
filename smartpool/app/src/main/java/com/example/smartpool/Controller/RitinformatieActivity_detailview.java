@@ -42,6 +42,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
 
         ListView gebruikersListview = findViewById(R.id.activity_detailview_ritinformatie_gebruikers_list);
         ArrayList<Medewerkerinfo> medewerkerinfos = new ArrayList<>();
+
         gebruikersListview.setAdapter(new Detailview_ArrayAdapter(this, R.layout.listview_adpater_ritinformatie_detaivliew, medewerkerinfos));
 
     }
