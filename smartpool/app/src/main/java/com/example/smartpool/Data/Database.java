@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.smartpool.Domain.AutoInfo;
 import com.example.smartpool.Domain.BeloningWaardeCredit;
+import com.example.smartpool.Domain.RitAanmelding;
 import com.example.smartpool.Domain.RitInfo;
 
 import java.util.ArrayList;
@@ -456,11 +457,30 @@ public class Database extends SQLiteOpenHelper {
         try {
             db.insert(RITINFO_TABEL_NAAM, null, contentValues);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
         }
         close();
+    }
+
+    public void insertAanmelding(RitAanmelding aanmelding){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(AANMELDING_KOLOM_DATUM, aanmelding.getDatum() );
+        contentValues.put(AANMELDING_KOLOM_GEBRUIKERSNAAM, aanmelding.getGebruikersnaam());
+        switch (aanmelding.getCarpoolcategorie()){
+            case BACKUP_BESTUUDER:
+                contentValues.put(AANMELDING_KOLOM_CARPOOLCATEGORIE, "Back up");
+                break;
+            case MEERIJDER:
+                contentValues.put(AANMELDING_KOLOM_CARPOOLCATEGORIE, "meerijder");
+                break;
+            case BESTUUDER:
+                contentValues.put(AANMELDING_KOLOM_CARPOOLCATEGORIE, "bestuuder");
+                break;
+        }
+        db.insert(AANMELDING_TABEL_NAAM, null, contentValues);
     }
 
 
