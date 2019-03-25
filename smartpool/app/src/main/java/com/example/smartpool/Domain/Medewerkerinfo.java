@@ -15,6 +15,7 @@ Carpoolcategorie carpoolcategorie;
 String Datum;
 
 
+
     public Medewerkerinfo() {
     }
 
@@ -40,6 +41,7 @@ String Datum;
         this.bedrijf = bedrijf;
         this.carpoolcategorie = carpoolcategorie;
         Datum = datum;
+
     }
 
     public String getGebruikersnaam() {
@@ -65,7 +67,6 @@ String Datum;
     public void setTelefoonnumer(String telefoonnumer) {
         this.telefoonnumer = telefoonnumer;
     }
-
     public String getWachtwoord() {
         return wachtwoord;
     }
@@ -110,7 +111,7 @@ String Datum;
         return carpoolcategorie;
     }
 
-    public void setCarpoolcategorie(Carpoolcategorie carpoolcategorie) {
+    public void setCarpoolcategorie(com.example.smartpool.Domain.Carpoolcategorie carpoolcategorie) {
         this.carpoolcategorie = carpoolcategorie;
     }
 
@@ -119,6 +120,10 @@ String Datum;
     }
 
     public void setDatum(String datum) {
-        Datum = datum;
-    }
+        Datum = datum; }
 }
+
+
+
+
+

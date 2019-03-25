@@ -6,10 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.smartpool.Data.Database;
 import com.example.smartpool.R;
+import com.example.smartpool.Domain.Medewerkerinfo;
+
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
-
+    Database database;
     Button bRegister;
     EditText etFNaam, etTlfnmr, etWoonplaats, etBedrijf, etGebruikersnaam, etWachtwoord;
 
@@ -18,7 +21,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        database = new Database(this);
         etFNaam = (EditText) findViewById(R.id.etFNaam);
 
         etTlfnmr = (EditText) findViewById(R.id.etTlfnmr);
@@ -38,19 +41,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             case R.id.bRegister:
 
 
-
-                String fnaam = etFNaam.getText().toString();
-                int tlfnmr = Integer.parseInt(etTlfnmr.getText().toString());
-                String woonplaats = etWoonplaats.getText().toString();
-                String bedrijf = etBedrijf.getText().toString();
-                String gebruikersnaam = etGebruikersnaam.getText().toString();
-                String wachtwoord = etWachtwoord.getText().toString();
-
-
-
-
-               
-
+                Medewerkerinfo medewerkerinfo = new Medewerkerinfo(
+                        String.valueOf(etGebruikersnaam.getText()),
+                        0,
+                        String.valueOf(etTlfnmr.getText()),
+                        String.valueOf(etWachtwoord.getText()),
+                        String.valueOf(etWoonplaats.getText()),
+                        String.valueOf(etFNaam.getText()),
+                        String.valueOf(""),
+                        String.valueOf(etBedrijf));
+                database.insertMedewerker(medewerkerinfo);
 
                 break;
 
