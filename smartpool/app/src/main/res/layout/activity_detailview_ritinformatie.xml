@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:layout_marginTop="0dp">
+    tools:layout_marginTop="-500dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraint_layout"
@@ -396,6 +396,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/detail_rtinformatieActivity_ritvoltooid_btn"
+            android:layout_width="121dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="voltooid"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.465"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_detailview_ritinformatie_gebruikers_list"
+            app:layout_constraintVertical_bias="0.025" />
 
     </android.support.constraint.ConstraintLayout>
 

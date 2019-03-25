@@ -37,9 +37,10 @@ public class QRGeneratorActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         progressBar = findViewById(R.id.activity_qrgenerator_progressbar);
-            new Thread(() -> {
+        Bundle extras = getIntent().getExtras();
+        new Thread(() -> {
                 try {
-                    bitmap = TextToImageEncode("gas the jews 2: a new hope");
+                    bitmap = TextToImageEncode(extras.getString("data"));
 
                     runOnUiThread(() -> {
                         imageView.setImageBitmap(bitmap);

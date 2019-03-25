@@ -27,6 +27,7 @@
         <activity android:name=".Controller.BeloningOverzichtActivity" />
         <activity android:name=".Controller.Register"/>
         <activity android:name=".Controller.MainActivity" />
+        <activity android:name=".Controller.QRGeneratorActivity"/>
     </application>
 
 </manifest>
