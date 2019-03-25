@@ -7,11 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.smartpool.Controller.GifsthopDetailActivity;
 import com.example.smartpool.Controller.RitinformatieActivity_detailview;
+import com.example.smartpool.Controller.RitoverzichtFragment;
 import com.example.smartpool.Domain.BeloningWaardeCredit;
 import com.example.smartpool.Domain.RitInfo;
 import com.example.smartpool.R;
@@ -19,9 +22,10 @@ import com.example.smartpool.R;
 
 import java.util.ArrayList;
 
-public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzicht.ViewHolder> {
+public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzicht.ViewHolder> implements Filterable {
 
     private ArrayList<RitInfo> mDataset;
+    private ArrayList<RitInfo> mDatasetFull;
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -34,6 +38,7 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
         public TextView tvTijd;
         public TextView tvOpstap;
         public TextView tvEind;
+        
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -48,6 +53,8 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
 
         }
 
+
+
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
@@ -60,12 +67,24 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
             ritDetailIntent.putExtra("Ritinfo", mRitInfo);
 
             view.getContext().startActivity(ritDetailIntent);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, RitinformatieActivity_detailview.class);
+                    intent.putExtra("Ritoverzicht", mDataset.get(position));
+                    mContext.startActivity(intent);
+                }
+            });
+
+
         }
     }
 
     //constructor voor adapter
     public AdapterRitoverzicht(ArrayList<RitInfo> mDataset, Context mContext){
         this.mDataset = mDataset;
+        mDatasetFull = new ArrayList<RitInfo>(mDataset);
         this.mContext = mContext;
     }
 
@@ -100,5 +119,39 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
         return size;
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
 
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<RitInfo> filteredRitten = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+            filteredRitten.addAll(mDatasetFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (RitInfo item : mDatasetFull){
+                    if (item.getOpstapplaats().toLowerCase().contains(filterPattern)){
+                        filteredRitten.add(item);
+
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredRitten;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mDataset.clear();
+            mDataset.addAll((ArrayList) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 public class RitinformatieActivity_detailview  extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,8 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         TextView kentekenTxt = findViewById(R.id.detail_ritinformatieActivity_kentekenInput_txt);
         String gebruikersnaam = "sander123133";
         database.createTestData();
+
+        getIncomingIntent();
         /*
         ArrayList<RitInfo>  ritten = database.getRitten();
 
@@ -79,6 +83,22 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
             intent.putExtra("data", dataString.toString());
             startActivity(intent);
         });
+
+
+    }
+
+    private void getIncomingIntent(){
+        if (getIntent().hasExtra("Ritoverzicht")){
+
+            String ritoverzicht = getIntent().getStringExtra("Ritoverzicht");
+            setIntent(ritoverzicht);
+
+        }
+    }
+
+    private void setIntent(String ritoverzicht){
+        TextView txtIntent = findViewById(R.id.txtIntent);
+        txtIntent.setText(ritoverzicht);
 
 
     }
