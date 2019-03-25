@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.smartpool.R;
+import com.example.smartpool.Domain.Medewerkerinfo;
+
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,12 +41,15 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
 
 
-                String fnaam = etFNaam.getText().toString();
-                int tlfnmr = Integer.parseInt(etTlfnmr.getText().toString());
-                String woonplaats = etWoonplaats.getText().toString();
-                String bedrijf = etBedrijf.getText().toString();
-                String gebruikersnaam = etGebruikersnaam.getText().toString();
-                String wachtwoord = etWachtwoord.getText().toString();
+                etFNaam.setText(Medewerkerinfo.getNaam());
+                etTlfnmr.setText("Telefoonnummer: " + Double.toString(Medewerkerinfo.getTelefoonnumer()));
+                etWoonplaats.setText(Medewerkerinfo.getWoonplaats());
+                etBedrijf.setText(Medewerkerinfo.getBedrijfnaam());
+                etGebruikersnaam.setText(Medewerkerinfo.getGebruikersnaam());
+                etWachtwoord.setText(Medewerkerinfo.getWachtwoord());
+
+
+
 
 
 
