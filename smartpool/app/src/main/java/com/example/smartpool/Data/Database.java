@@ -8,10 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 import com.example.smartpool.Domain.BedrijfRang;
 import com.example.smartpool.Domain.BeloningWaardeCredit;
 import com.example.smartpool.Domain.MedewerkerBeloning;
 import com.example.smartpool.Domain.Medewerkerinfo;
+
+import com.example.smartpool.Domain.AutoInfo;
+
+import com.example.smartpool.Domain.RitAanmelding;
+import com.example.smartpool.Domain.RitInfo;
+
 
 import java.util.ArrayList;
 
@@ -20,7 +27,9 @@ public class Database extends SQLiteOpenHelper {
     private final String TAG = getClass().getSimpleName();
 
     private static final String DB_NAME = "smartpoolDB";
+
     private static final int DB_V = 3;
+
 
     //tabel en kolomnamen
     //tabel MedewerkerInfo
@@ -71,8 +80,8 @@ public class Database extends SQLiteOpenHelper {
     private static final String RITINFO_KOLOM_EINDBESTEMMING = "Eindbestemming";
     private static final String RITINFO_KOLOM_DATUM = "Datum";
     private static final String RITINFO_KOLOM_STARTTIJD = "Starttijd";
-    private static final String RITINFO_KOLOM_OPEN_PLAATSEN = "Open plaatsen";
-    private static final String RITINFO_KOLOM_TIJD_TERUGRIJDEN = "Tijd terugrijden";
+    private static final String RITINFO_KOLOM_OPEN_PLAATSEN = "Openplaatsen";
+    private static final String RITINFO_KOLOM_TIJD_TERUGRIJDEN = "Tijdterugrijden";
     private static final String RITINFO_KOLOM_STATUS = "Status";
     private static final String RITINFO_KOLOM_KENTEKEN = "Kenteken";
     private static final String RITINFO_KOLOM_QRCODE = "qrcode";
@@ -272,6 +281,33 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<RitInfo> geefRitInfo() {
+
+        ArrayList<RitInfo> ritInfoArrayList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + RITINFO_TABEL_NAAM + ";", null);
+        res.moveToFirst();
+
+        while (!res.isAfterLast()){
+
+            RitInfo ri = new RitInfo();
+
+            ri.setOpstapplaats(res.getString(res.getColumnIndex(RITINFO_KOLOM_OPSTAPPLAATS)));
+            ri.setEindbestmming(res.getString(res.getColumnIndex(RITINFO_KOLOM_EINDBESTEMMING)));
+            ri.setDatum(res.getString(res.getColumnIndex(RITINFO_KOLOM_DATUM)));
+            ri.setTijdHeen(res.getString(res.getColumnIndex(RITINFO_KOLOM_STARTTIJD)));
+            ri.setTijdTerug(res.getString(res.getColumnIndex(RITINFO_KOLOM_TIJD_TERUGRIJDEN)));
+            ri.setVrijePlaatsen(res.getInt(res.getColumnIndex(RITINFO_KOLOM_OPEN_PLAATSEN)));
+            ri.setGebruikersnaam(res.getString(res.getColumnIndex(RITINFO_KOLOM_GEBRUIKERSNAAM)));
+            ri.setStatus(res.getString(res.getColumnIndex(RITINFO_KOLOM_STATUS)));
+            ri.setKenteken(res.getString(res.getColumnIndex(RITINFO_KOLOM_KENTEKEN)));
+            ri.setQrCode(res.getString(res.getColumnIndex(RITINFO_KOLOM_QRCODE)));
+        }
+        close();
+        return ritInfoArrayList;
+    }
+
     public boolean insertBeloning(BeloningWaardeCredit beloningWaardeCredit){
 
         Log.d(TAG, "insertBeloning: aangeroepen");
@@ -296,6 +332,54 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public boolean insertAutoInfo(AutoInfo autoInfo) {
+
+        Log.d(TAG, "insertAutoInfo: aangeroepen");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(AUTOINFO_KOLOM_KENTEKEN, autoInfo.getKenteken());
+        contentValues.put(AUTOINFO_KOLOM_KLEUR, autoInfo.getKleur());
+        contentValues.put(AUTOINFO_KOLOM_MERK, autoInfo.getMerk());
+
+        Log.d(TAG, "insert autoinfo: " + autoInfo.getKenteken());
+
+        db.insert(AUTOINFO_TABEL_NAAM, null, contentValues);
+        close();
+
+
+        return  true;
+
+    }
+
+    public boolean insertRitInfo(RitInfo ritInfo) {
+
+        Log.d(TAG, "insertRitInfo: aangeroepen");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(RITINFO_KOLOM_DATUM, ritInfo.getDatum());
+        contentValues.put(RITINFO_KOLOM_EINDBESTEMMING, ritInfo.getEindbestmming());
+        contentValues.put(RITINFO_KOLOM_GEBRUIKERSNAAM, ritInfo.getGebruikersnaam());
+        contentValues.put(RITINFO_KOLOM_KENTEKEN, ritInfo.getKenteken());
+        contentValues.put(RITINFO_KOLOM_OPEN_PLAATSEN, ritInfo.getVrijePlaatsen());
+        contentValues.put(RITINFO_KOLOM_OPSTAPPLAATS, ritInfo.getOpstapplaats());
+        contentValues.put(RITINFO_KOLOM_QRCODE, ritInfo.getQrCode());
+        contentValues.put(RITINFO_KOLOM_STARTTIJD, ritInfo.getTijdHeen());
+        contentValues.put(RITINFO_KOLOM_STATUS, ritInfo.getStatus());
+        contentValues.put(RITINFO_KOLOM_TIJD_TERUGRIJDEN, ritInfo.getTijdTerug());
+
+        Log.d(TAG, "insert ritinfo: " + ritInfo.getKenteken());
+
+        db.insert(RITINFO_TABEL_NAAM, null, contentValues);
+        close();
+
+
+        return  true;
+    }
+
     public void createTestData(){
 
         Log.d(TAG, "createTestData: Called");
@@ -310,6 +394,7 @@ public class Database extends SQLiteOpenHelper {
 
             ArrayList<BeloningWaardeCredit> beloningen = genereerBeloningen();
 
+
             //geen data -> maak aan
             Log.d(TAG, "createTestData: Creating BeloningWaardeCredit TEST DATA");
             SQLiteDatabase db = getWritableDatabase();
@@ -317,6 +402,8 @@ public class Database extends SQLiteOpenHelper {
             for(BeloningWaardeCredit bwc: beloningen){
                 insertBeloning(bwc);
             }
+
+
         }
 
         Log.d(TAG, "createTestData: Testdata is already available.");
@@ -351,6 +438,7 @@ public class Database extends SQLiteOpenHelper {
         return beloningen;
 
     }
+
 
     public boolean insertMedewerkerBeloning(MedewerkerBeloning medewerkerBeloning){
 
@@ -413,9 +501,15 @@ public class Database extends SQLiteOpenHelper {
         close();
     }
 
+
+
+
+
+
     public void insertMedewerker(Medewerkerinfo medewerkerinfo){
 
-        Log.d(TAG, "insertMedewerker: aangeroepen");
+        Log.d(TAG, "insertBeloning: aangeroepen");
+
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -488,5 +582,55 @@ public class Database extends SQLiteOpenHelper {
         close();
 
     }
+
+    public void insertRit(RitInfo ritInfo){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(RITINFO_KOLOM_DATUM, ritInfo.getDatum());
+        contentValues.put(RITINFO_KOLOM_EINDBESTEMMING, ritInfo.getEindbestmming());
+        contentValues.put(RITINFO_KOLOM_OPSTAPPLAATS, ritInfo.getOpstapplaats());
+        contentValues.put(RITINFO_KOLOM_STARTTIJD, ritInfo.getTijdHeen());
+        contentValues.put(RITINFO_KOLOM_TIJD_TERUGRIJDEN, ritInfo.getTijdTerug());
+        contentValues.put(RITINFO_KOLOM_DATUM, ritInfo.getDatum());
+        contentValues.put(RITINFO_KOLOM_OPEN_PLAATSEN, ritInfo.getVrijePlaatsen());
+        contentValues.put(RITINFO_KOLOM_QRCODE, "nee");
+        contentValues.put(RITINFO_KOLOM_GEBRUIKERSNAAM, "bleh1234");
+        contentValues.put(RITINFO_KOLOM_STATUS, "verhinderd");
+        contentValues.put(RITINFO_KOLOM_KENTEKEN, "12-345-67");
+
+
+        try {
+            db.insert(RITINFO_TABEL_NAAM, null, contentValues);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        close();
+    }
+
+    public void insertAanmelding(RitAanmelding aanmelding){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(AANMELDING_KOLOM_DATUM, aanmelding.getDatum() );
+        contentValues.put(AANMELDING_KOLOM_GEBRUIKERSNAAM, aanmelding.getGebruikersnaam());
+        switch (aanmelding.getCarpoolcategorie()){
+            case BACKUP_BESTUUDER:
+                contentValues.put(AANMELDING_KOLOM_CARPOOLCATEGORIE, "Back up");
+                break;
+            case MEERIJDER:
+                contentValues.put(AANMELDING_KOLOM_CARPOOLCATEGORIE, "meerijder");
+                break;
+            case BESTUUDER:
+                contentValues.put(AANMELDING_KOLOM_CARPOOLCATEGORIE, "bestuuder");
+                break;
+        }
+        db.insert(AANMELDING_TABEL_NAAM, null, contentValues);
+    }
+
+
+
 
 }

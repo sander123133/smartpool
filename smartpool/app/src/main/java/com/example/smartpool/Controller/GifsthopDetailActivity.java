@@ -19,7 +19,6 @@ import com.example.smartpool.Domain.BeloningWaardeCredit;
 import com.example.smartpool.Domain.MedewerkerBeloning;
 import com.example.smartpool.Domain.Medewerkerinfo;
 import com.example.smartpool.R;
-import com.squareup.picasso.Picasso;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
@@ -57,7 +56,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
         mOmschrijving.setText(bwc.getBeschrijving());
         mCreditAantal.setText(Integer.toString(bwc.getCreditaantal()));
         mLinkWebsite.setText(bwc.getWebsiteURL());
-        Picasso.with(this).load(bwc.getFoto()).into(mBeloningFoto);
+        //Picasso.with(this).load(bwc.getFoto()).into(mBeloningFoto);
 
         ingelogdeGebruiker = db.geefMedewerker("IngevZetten");
 
