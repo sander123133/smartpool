@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/nav_ritten"
@@ -13,5 +14,13 @@
         android:id="@+id/nav_giftshop"
         android:icon="@drawable/ic_card_giftcard_black_24dp"
         android:title="Giftshop"/>
+
+    <item
+        android:id="@+id/fdfsgsdgsdg"
+        android:icon="@drawable/ic_search"
+        android:title="Zoeken"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
 
 </menu>

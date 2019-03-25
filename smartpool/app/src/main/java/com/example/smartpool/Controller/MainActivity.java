@@ -6,14 +6,31 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import com.example.smartpool.Data.Database;
+import com.example.smartpool.Domain.RitInfo;
 import com.example.smartpool.R;
+import com.example.smartpool.Util.AdapterRitoverzicht;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private AdapterRitoverzicht adapter;
+    private ArrayList<RitInfo> mDataset;
 
     //functie om menu item klik actie
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -64,3 +81,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
+

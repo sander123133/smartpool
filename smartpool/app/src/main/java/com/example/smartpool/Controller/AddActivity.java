@@ -41,7 +41,7 @@ public class AddActivity extends AppCompatActivity {
                 EditText etKleur = findViewById(R.id.etKleur);
 
                 RitInfo ritInfo = new RitInfo( etOpstap.getText().toString(), etEind.getText().toString(), etDatum.getText().toString(), etTijdHeen.getText().toString(), etTijdTerug.getText().toString(),
-                        Integer.parseInt(etVrijPlaats.getText().toString()), "hoi", "", etKenteken.getText().toString(), "");
+                        Integer.parseInt(etVrijPlaats.getText().toString()), "", "", "", "");
 
 
 

@@ -1,16 +1,25 @@
 package com.example.smartpool.Controller;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import com.example.smartpool.Data.Database;
 import com.example.smartpool.Domain.BeloningWaardeCredit;
@@ -21,12 +30,17 @@ import com.example.smartpool.Util.AdapterRitoverzicht;
 
 import java.util.ArrayList;
 
-public class RitoverzichtFragment extends Fragment {
+
+
+public class RitoverzichtFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     private Database db = new Database(this.getContext());
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
 
     @Nullable
     @Override
@@ -35,6 +49,7 @@ public class RitoverzichtFragment extends Fragment {
         ArrayList<RitInfo> ritten = new ArrayList<>();
         RitInfo ritInfo = new RitInfo("Breda", "Roosendaal", "21-03-2019", "08:00");
         ritten.add(ritInfo);
+
 
         //ArrayList<RitInfo> ritten = db.geefRitInfo();
 
@@ -69,7 +84,29 @@ public class RitoverzichtFragment extends Fragment {
 
             }
         });
-
+        setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu, menu);
+
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
 }
+
+
+
