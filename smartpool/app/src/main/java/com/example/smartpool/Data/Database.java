@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.smartpool.Domain.BedrijfRang;
 import com.example.smartpool.Domain.BeloningWaardeCredit;
+import com.example.smartpool.Domain.MedewerkerBeloning;
+import com.example.smartpool.Domain.Medewerkerinfo;
 
 import java.util.ArrayList;
 
@@ -17,7 +20,7 @@ public class Database extends SQLiteOpenHelper {
     private final String TAG = getClass().getSimpleName();
 
     private static final String DB_NAME = "smartpoolDB";
-    private static final int DB_V = 1;
+    private static final int DB_V = 3;
 
     //tabel en kolomnamen
     //tabel MedewerkerInfo
@@ -127,22 +130,22 @@ public class Database extends SQLiteOpenHelper {
                 "PRIMARY KEY(" + BEDRIJFRANG_KOLOM_BEDRIJFSNAAM + "))");
 
         //tabel medewerkerinfo
-        sqLiteDatabase.execSQL("CREATE TABLE '" + MEDEWERKER_TABEL_NAAM + "' ( `" +
-                MEDEWERKER_KOLOM_GEBRUIKERSNAAM + "` TEXT, `" +
-                MEDEWERKER_KOLOM_WACHTWOORD + "` TEXT NOT NULL, `" +
-                MEDEWERKER_KOLOM_NAAM + "` TEXT NOT NULL, " +
+        sqLiteDatabase.execSQL("CREATE TABLE " + MEDEWERKER_TABEL_NAAM + "(" +
+                MEDEWERKER_KOLOM_GEBRUIKERSNAAM + " TEXT, " +
+                MEDEWERKER_KOLOM_WACHTWOORD + " TEXT NOT NULL, " +
+                MEDEWERKER_KOLOM_NAAM + " TEXT NOT NULL, " +
                 MEDEWERKER_KOLOM_WOONPLAATS + " TEXT NOT NULL," +
                 MEDEWERKER_KOLOM_BEDRIJF + " TEXT NOT NULL," +
                 MEDEWERKER_KOLOM_TELEFOONNUMMER + " INTEGER NOT NULL," +
                 MEDEWERKER_KOLOM_FOTO + " TEXT NOT NULL," +
                 MEDEWERKER_KOLOM_CREDITS_BESTEDEN + " INTEGER," +
-                "PRIMARY KEY(`" + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + "`)," +
+                "PRIMARY KEY(" + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + ")," +
                 "FOREIGN KEY(" + MEDEWERKER_KOLOM_BEDRIJF + ")" +
                 "REFERENCES " + BEDRIJFRANG_TABEL_NAAM + "(" + BEDRIJFRANG_KOLOM_BEDRIJFSNAAM + ") )");
 
         //tabel MedewerkerBeloning
-        sqLiteDatabase.execSQL("CREATE TABLE " + MEDEWERKERBELONING_TABEL_NAAM + " ( " +
-                MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + " TEXT, " +
+        sqLiteDatabase.execSQL("CREATE TABLE " + MEDEWERKERBELONING_TABEL_NAAM  +  " ( " +
+                MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 MEDEWERKERBELONING_KOLOM_BELONINGSNAAM + " TEXT NOT NULL, " +
                 MEDEWERKERBELONING_KOLOM_WAARDE + " NUMERIC NOT NULL, " +
                 MEDEWERKERBELONING_KOLOM_KORTINGSCODE + " TEXT NOT NULL, " +
@@ -150,7 +153,7 @@ public class Database extends SQLiteOpenHelper {
                 MEDEWERKERBELONING_KOLOM_DATUM + " TEXT NOT NULL, " +
                 "FOREIGN KEY(" + MEDEWERKERBELONING_KOLOM_GEBRUIKERSNAAM + ") REFERENCES " +
                 MEDEWERKER_TABEL_NAAM + "(" + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + "), " +
-                "PRIMARY KEY(" + MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + "), " +
+                //"PRIMARY KEY(" + MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + "), " +
                 "FOREIGN KEY(" + MEDEWERKERBELONING_KOLOM_BELONINGSNAAM + ", " + MEDEWERKERBELONING_KOLOM_WAARDE + ") " +
                 "REFERENCES " + BWC_TABEL_NAAM + "(" + BWC_KOLOM_BELONINGSNAAM + ", " + BWC_KOLOM_WAARDE +") )");
 
@@ -346,6 +349,143 @@ public class Database extends SQLiteOpenHelper {
         beloningen.add(beloning3);
 
         return beloningen;
+
+    }
+
+    public boolean insertMedewerkerBeloning(MedewerkerBeloning medewerkerBeloning){
+
+        Log.d(TAG, "insertMedewerkerBeloning: aangeroepen");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(MEDEWERKERBELONING_KOLOM_BELONINGSNAAM, medewerkerBeloning.getBeloningsnaam());
+        contentValues.put(MEDEWERKERBELONING_KOLOM_DATUM, medewerkerBeloning.getDatum());
+        contentValues.put(MEDEWERKERBELONING_KOLOM_GEBRUIKERSNAAM, medewerkerBeloning.getGebruikersnaam());
+        contentValues.put(MEDEWERKERBELONING_KOLOM_KORTINGSCODE, medewerkerBeloning.getKortingscode());
+        contentValues.put(MEDEWERKERBELONING_KOLOM_WAARDE, medewerkerBeloning.getWaarde());
+
+        Log.d(TAG, "insert medewerkerbeloning: " + medewerkerBeloning.getBeloningsnaam());
+
+        db.insert(MEDEWERKERBELONING_TABEL_NAAM, null, contentValues);
+        close();
+
+        return true;
+    }
+
+    public ArrayList<MedewerkerBeloning> geefAlleBeloningenMedewerker(String gebruikersnaam){
+
+        Log.d(TAG, "geefAlleBeloningenMedewerker: aangeroepen");
+        ArrayList<MedewerkerBeloning> beloningenMedewerker = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor res = sqLiteDatabase.rawQuery("SELECT * FROM " + MEDEWERKERBELONING_TABEL_NAAM + " WHERE " + MEDEWERKERBELONING_KOLOM_GEBRUIKERSNAAM + " = '" + gebruikersnaam + "';", null);
+        res.moveToFirst();
+
+        while (!res.isAfterLast()){
+
+            MedewerkerBeloning mdb = new MedewerkerBeloning();
+
+            mdb.setBeloningsnaam(res.getString(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_BELONINGSNAAM)));
+            mdb.setDatum(res.getString(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_DATUM)));
+            mdb.setGebruikersnaam(res.getString(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_GEBRUIKERSNAAM)));
+            mdb.setKortingscode(res.getString(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_KORTINGSCODE)));
+            mdb.setTransactienummer(res.getInt(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_TRANSACTIENMR)));
+            mdb.setWaarde(res.getDouble(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_WAARDE)));
+
+            beloningenMedewerker.add(mdb);
+            res.moveToNext();
+
+        }
+
+        close();
+        return beloningenMedewerker;
+
+
+    }
+
+    public void verwijderBeloning(String transactienummer){
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String query = "DELETE FROM " + MEDEWERKERBELONING_TABEL_NAAM + " WHERE " + MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + " = '" + transactienummer + "';";
+
+        sqLiteDatabase.execSQL(query);
+        close();
+    }
+
+    public void insertMedewerker(Medewerkerinfo medewerkerinfo){
+
+        Log.d(TAG, "insertMedewerker: aangeroepen");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(MEDEWERKER_KOLOM_GEBRUIKERSNAAM, medewerkerinfo.getGebruikersnaam());
+        contentValues.put(MEDEWERKER_KOLOM_WACHTWOORD, medewerkerinfo.getWachtwoord());
+        contentValues.put(MEDEWERKER_KOLOM_NAAM, medewerkerinfo.getNaam());
+        contentValues.put(MEDEWERKER_KOLOM_BEDRIJF, medewerkerinfo.getBedrijf());
+        contentValues.put(MEDEWERKER_KOLOM_WOONPLAATS, medewerkerinfo.getWoonplaats());
+        contentValues.put(MEDEWERKER_KOLOM_TELEFOONNUMMER, medewerkerinfo.getTelefoonnumer());
+        contentValues.put(MEDEWERKER_KOLOM_FOTO, medewerkerinfo.getFoto());
+        contentValues.put(MEDEWERKER_KOLOM_CREDITS_BESTEDEN, medewerkerinfo.getCreditaantal());
+
+        Log.d(TAG, "insert medewerker: " + medewerkerinfo.getGebruikersnaam());
+
+        db.insert(MEDEWERKER_TABEL_NAAM, null, contentValues);
+        close();
+
+
+    }
+
+    public Medewerkerinfo geefMedewerker(String gebruikersnaam){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + MEDEWERKER_TABEL_NAAM + " WHERE " + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + " = '" + gebruikersnaam + "';" , null);
+        res.moveToFirst();
+
+        Medewerkerinfo medewerkerinfo = new Medewerkerinfo();
+
+        medewerkerinfo.setGebruikersnaam(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_GEBRUIKERSNAAM)));
+        medewerkerinfo.setWachtwoord(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_WACHTWOORD)));
+        medewerkerinfo.setBedrijf(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_BEDRIJF)));
+        medewerkerinfo.setCreditaantal(res.getInt(res.getColumnIndex(MEDEWERKER_KOLOM_CREDITS_BESTEDEN)));
+        medewerkerinfo.setFoto(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_FOTO)));
+        medewerkerinfo.setNaam(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_NAAM)));
+        medewerkerinfo.setTelefoonnumer(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_TELEFOONNUMMER)));
+        medewerkerinfo.setWoonplaats(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_WOONPLAATS)));
+
+        close();
+        return medewerkerinfo;
+
+    }
+
+    public void insertBedrijf(BedrijfRang bedrijfRang){
+
+        Log.d(TAG, "insertBedrijf: aangeroepen");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(BEDRIJFRANG_KOLOM_BEDRIJFSNAAM, bedrijfRang.getBedrijfsnaam());
+        contentValues.put(BEDRIJFRANG_KOLOM_CREDITAANTAL, bedrijfRang.getCreditaantal());
+        contentValues.put(BEDRIJFRANG_KOLOM_PLAATS, bedrijfRang.getPlaats());
+
+
+        Log.d(TAG, "insert bedrijf: " + bedrijfRang.getBedrijfsnaam());
+
+        db.insert(BEDRIJFRANG_TABEL_NAAM, null, contentValues);
+        close();
+
+
+    }
+
+    public void updateCreditTeBesteden(int creditaantal, String gebruikersnaam){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + MEDEWERKER_TABEL_NAAM + " SET " + MEDEWERKER_KOLOM_CREDITS_BESTEDEN + " = " + creditaantal + " WHERE " + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + " = '" + gebruikersnaam + "';";
+
+        db.execSQL(query);
+        close();
 
     }
 

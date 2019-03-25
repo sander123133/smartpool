@@ -6,12 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.smartpool.Data.Database;
 import com.example.smartpool.Domain.BeloningWaardeCredit;
+import com.example.smartpool.Domain.Medewerkerinfo;
 import com.example.smartpool.R;
 import com.example.smartpool.Util.AdapterGiftshop;
 
@@ -27,6 +30,10 @@ public class GiftshopFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        Medewerkerinfo medewerkerinfo = (Medewerkerinfo) getArguments().getSerializable("GebruikerIngelogd");
+
+        Log.d("GiftshopFragment", "medewerker ingelogd:" + medewerkerinfo.getGebruikersnaam());
 
         mDatabase = new Database(this.getContext());
 
@@ -47,6 +54,10 @@ public class GiftshopFragment extends Fragment {
         mAdapter = new AdapterGiftshop(beloningen, this.getContext());
         //set adapter
         mRecyclerView.setAdapter(mAdapter);
+
+        TextView tvCreditBesteedbaar =  rootView.findViewById(R.id.tv_creditaantal_besteden);
+        tvCreditBesteedbaar.setText(Integer.toString(medewerkerinfo.getCreditaantal()));
+
 
         return rootView;
     }

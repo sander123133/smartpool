@@ -7,5 +7,6 @@
     <string name="aantal_credits_te_besteden">Aantal credits te besteden:</string>
 
     <string name="app_name">Smartpool</string>
+    <string name="credits_besteedbaar">30</string>
 
 </resources>

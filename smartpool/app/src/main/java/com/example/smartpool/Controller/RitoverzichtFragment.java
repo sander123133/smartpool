@@ -23,7 +23,7 @@ public class RitoverzichtFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        final FloatingActionButton button =  getView().findViewById(R.id.btnSave);
+        final FloatingActionButton button =   getView().findViewById(R.id.fabToevoegen);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

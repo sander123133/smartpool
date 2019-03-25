@@ -6,14 +6,19 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 
 import com.example.smartpool.Data.Database;
+import com.example.smartpool.Domain.BedrijfRang;
+import com.example.smartpool.Domain.Medewerkerinfo;
 import com.example.smartpool.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Database db = new Database(this);
 
     //functie om menu item klik actie
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -25,8 +30,16 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager manager = getSupportFragmentManager();
             switch (item.getItemId()) {
                 case R.id.nav_giftshop:
-                    manager.beginTransaction().replace(R.id.fragment_container, new GiftshopFragment()).commit();
+                    //haal medewerker die net in de database gestopt is op, test
+                    /////////////////test///////////////
+                    Medewerkerinfo ingelogdeGebruiker = db.geefMedewerker("IngevZetten");
+                    Bundle gebruikerIngelogd = new Bundle();
+                    gebruikerIngelogd.putSerializable("GebruikerIngelogd", ingelogdeGebruiker);
+                    GiftshopFragment giftshopFragment = new GiftshopFragment();
+                    giftshopFragment.setArguments(gebruikerIngelogd);
+                    manager.beginTransaction().replace(R.id.fragment_container, giftshopFragment).commit();
                     getSupportActionBar().setTitle("Giftshop");
+
                     break;
                 case R.id.nav_ranglijst:
                     manager.beginTransaction().replace(R.id.fragment_container, new RitoverzichtFragment()).commit();
@@ -49,17 +62,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity_container);
 
 
-        Database db = new Database(this);
+
         db.createTestData();
 
+        //TESTDATA
+        //BedrijfRang bedrijfRang = new BedrijfRang("DHL", 40, 3);
+        //db.insertBedrijf(bedrijfRang);
+
+        //Medewerkerinfo medewerkerinfo = new Medewerkerinfo("IngevZetten", 100, "0657003878", "IvZ", "Breda", "Inge van Zetten", "test", "DHL");
+        //db.insertMedewerker(medewerkerinfo);
+
+        //Log.d("Check medewerker", "medewerker toegevoegd: " + ingelogdeGebruiker.getGebruikersnaam());
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RitoverzichtFragment()).commit();
         getSupportActionBar().setTitle("Ritten");
-
-
 
     }
 

@@ -48,7 +48,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="56dp"
             android:layout_marginBottom="8dp"
-            android:text="30"
+            android:text="@string/credits_besteedbaar"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/recyclerview_giftshop"

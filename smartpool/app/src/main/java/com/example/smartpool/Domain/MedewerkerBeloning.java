@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class MedewerkerBeloning implements Serializable {
 
-    private String transactienummer;
+    private int transactienummer;
     private double waarde;
     private String beloningsnaam;
     private String gebruikersnaam;
@@ -14,7 +14,7 @@ public class MedewerkerBeloning implements Serializable {
     public MedewerkerBeloning() {
     }
 
-    public MedewerkerBeloning(String transactienummer, double waarde, String beloningsnaam, String gebruikersnaam, String kortingscode, String datum) {
+    public MedewerkerBeloning(int transactienummer, double waarde, String beloningsnaam, String gebruikersnaam, String kortingscode, String datum) {
         this.transactienummer = transactienummer;
         this.waarde = waarde;
         this.beloningsnaam = beloningsnaam;
@@ -23,11 +23,19 @@ public class MedewerkerBeloning implements Serializable {
         this.datum = datum;
     }
 
-    public String getTransactienummer() {
+    public MedewerkerBeloning(double waarde, String beloningsnaam, String gebruikersnaam, String kortingscode, String datum) {
+        this.waarde = waarde;
+        this.beloningsnaam = beloningsnaam;
+        this.gebruikersnaam = gebruikersnaam;
+        this.kortingscode = kortingscode;
+        this.datum = datum;
+    }
+
+    public int getTransactienummer() {
         return transactienummer;
     }
 
-    public void setTransactienummer(String transactienummer) {
+    public void setTransactienummer(int transactienummer) {
         this.transactienummer = transactienummer;
     }
 
