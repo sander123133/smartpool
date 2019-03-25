@@ -36,7 +36,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         String gebruikersnaam = "sander123133";
         database.createTestData();
 
-        getIncomingIntent();
+        //getIncomingIntent();
         /*
         ArrayList<RitInfo>  ritten = database.getRitten();
 
@@ -49,8 +49,8 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         */
         ListView gebruikersListview = findViewById(R.id.activity_detailview_ritinformatie_gebruikers_list);
         ArrayList<Medewerkerinfo> medewerkerinfos = new ArrayList<>();
-        medewerkerinfos.add(new Medewerkerinfo("rogier", 0, Carpoolcategorie.BESTUUDER, "230", "12/13/2014"));
-        medewerkerinfos.add(new Medewerkerinfo("daveyThebeste", 10, Carpoolcategorie.BACKUP_BESTUUDER, "1290", "12/13/2014"));
+        //medewerkerinfos.add(new Medewerkerinfo("rogier", 0, Carpoolcategorie.BESTUUDER, "230", "12/13/2014"));
+        //medewerkerinfos.add(new Medewerkerinfo("daveyThebeste", 10, Carpoolcategorie.BACKUP_BESTUUDER, "1290", "12/13/2014"));
         gebruikersListview.setAdapter(new Detailview_ArrayAdapter(this, R.layout.listview_adpater_ritinformatie_detaivliew, medewerkerinfos));
 
 
@@ -87,6 +87,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
 
     }
 
+    /*
     private void getIncomingIntent(){
         if (getIntent().hasExtra("Ritoverzicht")){
 
@@ -95,11 +96,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
 
         }
     }
-
-    private void setIntent(String ritoverzicht){
-        TextView txtIntent = findViewById(R.id.txtIntent);
-        txtIntent.setText(ritoverzicht);
+    */
 
 
-    }
 }
