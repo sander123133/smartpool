@@ -85,12 +85,14 @@ public class Database extends SQLiteOpenHelper {
     private static final String RITINFO_KOLOM_STATUS = "Status";
     private static final String RITINFO_KOLOM_KENTEKEN = "Kenteken";
     private static final String RITINFO_KOLOM_QRCODE = "qrcode";
+    private static final String RITINFO_KOLOM_RITNUMMER = "ritnummer";
 
     //tabel AanmeldingRit
     private static final String AANMELDING_TABEL_NAAM = "AanmeldingRit";
     private static final String AANMELDING_KOLOM_GEBRUIKERSNAAM = "Gebruikersnaam";
     private static final String AANMELDING_KOLOM_DATUM = "Datum";
     private static final String AANMELDING_KOLOM_CARPOOLCATEGORIE = "Carpoolcategorie";
+    private static final String AANMELDING_KOLOM_RITID = "ritnummer";
 
     //tabel CarpoolCategorieCredits
     private static final String CARPOOOLCATCREDITS_TABEL_NAAM = "CarpoolCategorieCredits";
@@ -210,7 +212,7 @@ public class Database extends SQLiteOpenHelper {
                 RITINFO_KOLOM_STATUS + " TEXT NOT NULL, " +
                 RITINFO_KOLOM_KENTEKEN + " TEXT NOT NULL, " +
                 RITINFO_KOLOM_QRCODE + " TEXT NOT NULL, " +
-                "PRIMARY KEY(" + RITINFO_KOLOM_GEBRUIKERSNAAM + ", " + RITINFO_KOLOM_DATUM + ")," +
+                RITINFO_KOLOM_RITNUMMER + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "FOREIGN KEY(" + RITINFO_KOLOM_GEBRUIKERSNAAM + ")" +
                 "REFERENCES " + MEDEWERKER_TABEL_NAAM + "(" + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + ")," +
                 "FOREIGN KEY(" + RITINFO_KOLOM_STATUS + ")" +
@@ -218,18 +220,20 @@ public class Database extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + RITINFO_KOLOM_KENTEKEN + ")" +
                 "REFERENCES " + AUTOINFO_TABEL_NAAM + "(" + AUTOINFO_KOLOM_KENTEKEN + ")," +
                 "FOREIGN KEY(" + RITINFO_KOLOM_QRCODE + ")" +
-                "REFERENCES " + QRCODE_TABEL_NAAM + "(" + QRCODE_KOLOM_QRCODE + ") )");
+                "REFERENCES " + QRCODE_TABEL_NAAM + "(" + QRCODE_KOLOM_QRCODE + ")," +
+                "UNIQUE(" + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_GEBRUIKERSNAAM  + ") )");
 
-        //tabel AanmeldingRit
+//tabel AanmeldingRit
         sqLiteDatabase.execSQL("CREATE TABLE " + AANMELDING_TABEL_NAAM + "(" +
                 AANMELDING_KOLOM_CARPOOLCATEGORIE + " TEXT, " +
                 AANMELDING_KOLOM_DATUM + " TEXT, " +
                 AANMELDING_KOLOM_GEBRUIKERSNAAM + " TEXT, " +
+                AANMELDING_KOLOM_RITID + " INTEGER," +
                 "PRIMARY KEY(" + AANMELDING_KOLOM_DATUM + ", " + AANMELDING_KOLOM_GEBRUIKERSNAAM + ", " + AANMELDING_KOLOM_CARPOOLCATEGORIE + ")," +
                 "FOREIGN KEY(" + AANMELDING_KOLOM_CARPOOLCATEGORIE + ")" +
                 "REFERENCES " + CARPOOOLCATCREDITS_TABEL_NAAM + "(" + CARPOOLCATCREDITS_KOLOM_CARPOOLCAT + ")," +
-                "FOREIGN KEY(" + AANMELDING_KOLOM_GEBRUIKERSNAAM + ", " + AANMELDING_KOLOM_DATUM + ") " +
-                "REFERENCES " + RITINFO_TABEL_NAAM + "(" + RITINFO_KOLOM_GEBRUIKERSNAAM + ", " + RITINFO_KOLOM_DATUM +") )");
+                "FOREIGN KEY(" + AANMELDING_KOLOM_GEBRUIKERSNAAM + ", " + AANMELDING_KOLOM_DATUM + ", " + AANMELDING_KOLOM_RITID + ") " +
+                "REFERENCES " + RITINFO_TABEL_NAAM + "(" + RITINFO_KOLOM_GEBRUIKERSNAAM + ", " + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_RITNUMMER + ") )");
 
     }
 
