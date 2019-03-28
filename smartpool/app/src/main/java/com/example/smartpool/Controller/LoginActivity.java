@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.smartpool.Data.Database;
 import com.example.smartpool.R;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
     Button bLogin;
     EditText etUsername, etPassword;
@@ -25,30 +25,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_login);
 
+        db = new Database(this);
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         bLogin = (Button) findViewById(R.id.bLogin);
 
-        bLogin.setOnClickListener(this );
-        tvRegisterLink.setOnClickListener(this);
+        bLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                String gebruikersnaam = etUsername.getText().toString();
+                String wachtwoord = etPassword.getText().toString();
+                Boolean Chkgebruikerwachtwoord = db.gebruikerwachtwoord(gebruikersnaam, wachtwoord);
+                if (Chkgebruikerwachtwoord == true) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("Gebruikersnaam", gebruikersnaam);
+                    startActivity(intent);
+                } else
+                    Toast.makeText(getApplicationContext(), "verkeerde inloggegevens", Toast.LENGTH_SHORT).show();
+            }
+
+
+        });
+
+        tvRegisterLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), Register.class);
+                startActivity(intent);
+
+            }
+        });
 
 
     }
+}
 
-    @Override
-    public void onClick(View v){
-        String gebruikersnaam = etUsername.getText().toString();
-        String wachtwoord = etPassword.getText().toString();
-        Boolean Chkgebruikerwachtwoord = db.gebruikerwachtwoord(gebruikersnaam,wachtwoord);
-        if(Chkgebruikerwachtwoord==true)
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-        else
-            Toast.makeText(getApplicationContext(),"wrong email or password", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
 
