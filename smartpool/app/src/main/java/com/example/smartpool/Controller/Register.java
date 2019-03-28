@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.smartpool.Data.Database;
 import com.example.smartpool.R;
@@ -12,6 +13,8 @@ import com.example.smartpool.Domain.Medewerkerinfo;
 
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
+    private static final int SELECT_PICTURE = 0;
+    private ImageView imageView;
     Database database;
     Button bRegister;
     EditText etFNaam, etTlfnmr, etWoonplaats, etBedrijf, etGebruikersnaam, etWachtwoord;
@@ -23,7 +26,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_register);
         database = new Database(this);
         etFNaam = (EditText) findViewById(R.id.etFNaam);
-
+        imageView = (ImageView) findViewById(android.R.id.icon);
         etTlfnmr = (EditText) findViewById(R.id.etTlfnmr);
         etWoonplaats = (EditText) findViewById(R.id.etWoonplaats);
         etBedrijf = (EditText) findViewById(R.id.etBedrijf);
