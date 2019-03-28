@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.smartpool.Data.Database;
 import com.example.smartpool.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -15,8 +17,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button bLogin;
     EditText etUsername, etPassword;
     TextView tvRegisterLink;
-
-
+    private Database db;
 
 
     @Override
@@ -38,21 +39,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.bLogin:
+    public void onClick(View v){
+        String gebruikersnaam = etUsername.getText().toString();
+        String wachtwoord = etPassword.getText().toString();
+        Boolean Chkgebruikerwachtwoord = db.gebruikerwachtwoord(gebruikersnaam,wachtwoord);
+        if(Chkgebruikerwachtwoord==true)
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-
-
-
-                break;
-
-            case R.id.tvRegisterLink:
-
-                startActivity(new Intent(this, Register.class));
-
-                break;
+        else
+            Toast.makeText(getApplicationContext(),"wrong email or password", Toast.LENGTH_SHORT).show();
         }
     }
-}
+
 

@@ -553,6 +553,14 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public Boolean gebruikerwachtwoord(String gebruikersnaam, String wachtwoord){
+SQLiteDatabase db = this.getReadableDatabase();
+Cursor cursor = db.rawQuery("select * from Medewerkerinfo where gebruikersnaam = " + gebruikersnaam + "  and wachtwoord= " + wachtwoord, null);
+if(cursor.getCount()>0) return true;
+else return false;
+
+    }
+
     public void insertBedrijf(BedrijfRang bedrijfRang){
 
         Log.d(TAG, "insertBedrijf: aangeroepen");
