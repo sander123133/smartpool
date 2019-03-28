@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class RitoverzichtFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    private Database db = new Database(this.getContext());
+    private Database db;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -46,10 +46,10 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        ArrayList<RitInfo> ritten = new ArrayList<>();
-        RitInfo ritInfo = new RitInfo("Breda", "Roosendaal", "21-03-2019", "08:00");
-        ritten.add(ritInfo);
-
+        //ArrayList<RitInfo> ritten = new ArrayList<>();
+        //RitInfo ritInfo = new RitInfo("Breda", "Roosendaal", "21-03-2019", "08:00");
+        //ritten.add(ritInfo);
+        db = new Database(getContext());
 
         //ArrayList<RitInfo> ritten = db.geefRitInfo();
 
@@ -61,6 +61,11 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
         //Linear layout manager voor positionering van items in de recyclerview
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        //db.insertRitInfo(new RitInfo("bergen op zoom", "Roosendaal", "12-14-1990","7:00", "19:00", 4, "sander123133", "verhinderd", "12-345-67", ""));
+        //db.insertRitInfo(new RitInfo("bergen op zoom", "Roosendaal", "12-14-1990","7:00", "19:00", 4, "rogier", "verhinderd", "12-345-67", ""));
+       ArrayList<RitInfo> ritten =  db.geefRitInfo();
+
 
         //maak adapter
         mAdapter = new AdapterRitoverzicht(ritten, this.getContext());

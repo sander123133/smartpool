@@ -307,6 +307,9 @@ public class Database extends SQLiteOpenHelper {
             ri.setStatus(res.getString(res.getColumnIndex(RITINFO_KOLOM_STATUS)));
             ri.setKenteken(res.getString(res.getColumnIndex(RITINFO_KOLOM_KENTEKEN)));
             ri.setQrCode(res.getString(res.getColumnIndex(RITINFO_KOLOM_QRCODE)));
+
+            ritInfoArrayList.add(ri);
+            res.moveToNext();
         }
         close();
         return ritInfoArrayList;

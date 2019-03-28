@@ -24,8 +24,8 @@
         </activity>
 
         <activity android:name=".Controller.GifsthopDetailActivity" />
-        <activity android:name=".Controller.MainActivity" />
         <activity android:name=".Controller.Register"/>
+        <activity android:name=".Controller.RitinformatieActivity_detailview"/>
 
 
         <activity android:name=".Controller.QRGeneratorActivity"/>
