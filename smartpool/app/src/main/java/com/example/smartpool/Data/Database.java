@@ -28,7 +28,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "smartpoolDB";
 
-    private static final int DB_V = 3;
+    private static final int DB_V = 6;
 
 
     //tabel en kolomnamen
