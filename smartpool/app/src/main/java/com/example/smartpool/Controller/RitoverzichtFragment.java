@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class RitoverzichtFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    private Database db = new Database(this.getContext());
+    private Database db;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -46,12 +46,8 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        ArrayList<RitInfo> ritten = new ArrayList<>();
-        RitInfo ritInfo = new RitInfo("Breda", "Roosendaal", "21-03-2019", "08:00");
-        ritten.add(ritInfo);
-
-
-        //ArrayList<RitInfo> ritten = db.geefRitInfo();
+        db = new Database(this.getContext());
+        ArrayList<RitInfo> ritten = db.geefRitInfo();
 
         View rootView = inflater.inflate(R.layout.fragment_rit_overzicht, container, false);
 
@@ -73,7 +69,6 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
 
 
         final FloatingActionButton fabToevoegen =  getView().findViewById(R.id.fabToevoegen);

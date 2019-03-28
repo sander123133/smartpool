@@ -19,6 +19,7 @@ import com.example.smartpool.Domain.BeloningWaardeCredit;
 import com.example.smartpool.Domain.MedewerkerBeloning;
 import com.example.smartpool.Domain.Medewerkerinfo;
 import com.example.smartpool.R;
+import com.squareup.picasso.Picasso;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
@@ -30,6 +31,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
 
     private Database db = new Database(this);
     private Medewerkerinfo ingelogdeGebruiker;
+    private int nieuwCreditaantal;
 
 
     @Override
@@ -56,7 +58,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
         mOmschrijving.setText(bwc.getBeschrijving());
         mCreditAantal.setText(Integer.toString(bwc.getCreditaantal()));
         mLinkWebsite.setText(bwc.getWebsiteURL());
-        //Picasso.with(this).load(bwc.getFoto()).into(mBeloningFoto);
+        Picasso.with(this).load(bwc.getFoto()).into(mBeloningFoto);
 
         ingelogdeGebruiker = db.geefMedewerker("IngevZetten");
 
@@ -87,7 +89,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
                     }
 
                     //creditaantal ingelogde gebruiker verlagen
-                    int nieuwCreditaantal = ingelogdeGebruiker.getCreditaantal() - bwc.getCreditaantal();
+                    nieuwCreditaantal = ingelogdeGebruiker.getCreditaantal() - bwc.getCreditaantal();
                     db.updateCreditTeBesteden(nieuwCreditaantal, ingelogdeGebruiker.getGebruikersnaam());
 
                     Log.d("GiftshopDetailAcitivity", "nieuw creditaantal: " + nieuwCreditaantal);
@@ -120,6 +122,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
 
         return sb.toString();
     }
+
 
 
 }
