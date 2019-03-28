@@ -15,12 +15,5 @@
         android:icon="@drawable/ic_card_giftcard_black_24dp"
         android:title="Giftshop"/>
 
-    <item
-        android:id="@+id/fdfsgsdgsdg"
-        android:icon="@drawable/ic_search"
-        android:title="Zoeken"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
-
 
 </menu>

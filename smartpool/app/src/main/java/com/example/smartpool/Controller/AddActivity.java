@@ -16,7 +16,7 @@ import com.example.smartpool.R;
 
 public class AddActivity extends AppCompatActivity {
 
-    private Database db = new Database(this);
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,10 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.add_main);
         final Button btnSave = findViewById(R.id.btnSave);
 
+        db = new Database(this);
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-
 
                 EditText etOpstap = findViewById(R.id.etOpstap);
                 EditText etEind = findViewById(R.id.etEind);
@@ -41,15 +41,12 @@ public class AddActivity extends AppCompatActivity {
                 EditText etKleur = findViewById(R.id.etKleur);
 
                 RitInfo ritInfo = new RitInfo( etOpstap.getText().toString(), etEind.getText().toString(), etDatum.getText().toString(), etTijdHeen.getText().toString(), etTijdTerug.getText().toString(),
-                        Integer.parseInt(etVrijPlaats.getText().toString()), "", "", "", "");
-
-
+                        Integer.parseInt(etVrijPlaats.getText().toString()), "IngevZetten", "test", etKenteken.getText().toString(), "test");
 
                 AutoInfo autoInfo = new AutoInfo(etKenteken.getText().toString(), etMerk.getText().toString(), etKleur.getText().toString());
 
                 db.insertAutoInfo(autoInfo);
                 db.insertRitInfo(ritInfo);
-
 
                 Intent go = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(go);

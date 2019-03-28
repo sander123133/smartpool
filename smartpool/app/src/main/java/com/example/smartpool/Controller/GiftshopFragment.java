@@ -1,5 +1,6 @@
 package com.example.smartpool.Controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,16 +27,18 @@ public class GiftshopFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Database mDatabase;
+    private Medewerkerinfo medewerkerinfo;
+
+    private TextView tvCreditBesteedbaar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Medewerkerinfo medewerkerinfo = (Medewerkerinfo) getArguments().getSerializable("GebruikerIngelogd");
+        mDatabase = new Database(this.getContext());
+        medewerkerinfo = mDatabase.geefMedewerker("IngevZetten");
 
         Log.d("GiftshopFragment", "medewerker ingelogd:" + medewerkerinfo.getGebruikersnaam());
-
-        mDatabase = new Database(this.getContext());
 
         //haal beloningen op uit database
         ArrayList<BeloningWaardeCredit> beloningen = mDatabase.geefAlleBeloningen();
@@ -55,10 +58,18 @@ public class GiftshopFragment extends Fragment {
         //set adapter
         mRecyclerView.setAdapter(mAdapter);
 
-        TextView tvCreditBesteedbaar =  rootView.findViewById(R.id.tv_creditaantal_besteden);
+        tvCreditBesteedbaar =  rootView.findViewById(R.id.tv_creditaantal_besteden);
         tvCreditBesteedbaar.setText(Integer.toString(medewerkerinfo.getCreditaantal()));
 
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        medewerkerinfo = mDatabase.geefMedewerker("IngevZetten");
+        tvCreditBesteedbaar.setText(Integer.toString(medewerkerinfo.getCreditaantal()));
     }
 }

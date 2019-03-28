@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 
 import com.example.smartpool.Data.Database;
+import com.example.smartpool.Domain.BedrijfRang;
 import com.example.smartpool.Domain.Medewerkerinfo;
 import com.example.smartpool.Domain.RitInfo;
 import com.example.smartpool.R;
@@ -30,8 +32,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private Database db = new Database(this);
-    private AdapterRitoverzicht adapter;
-    private ArrayList<RitInfo> mDataset;
 
 
     //functie om menu item klik actie
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         db.createTestData();
 
+
         //TESTDATA
         //BedrijfRang bedrijfRang = new BedrijfRang("DHL", 40, 3);
         //db.insertBedrijf(bedrijfRang);
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         //Medewerkerinfo medewerkerinfo = new Medewerkerinfo("IngevZetten", 100, "0657003878", "IvZ", "Breda", "Inge van Zetten", "test", "DHL");
         //db.insertMedewerker(medewerkerinfo);
 
-        //Log.d("Check medewerker", "medewerker toegevoegd: " + ingelogdeGebruiker.getGebruikersnaam());
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
