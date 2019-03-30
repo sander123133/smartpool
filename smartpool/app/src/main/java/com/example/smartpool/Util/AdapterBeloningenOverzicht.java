@@ -149,7 +149,7 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        
+
         medewerkerBeloning = mDataset.get(viewHolder.getAdapterPosition());
 
         viewHolder.boBeloningsnaam.setText(medewerkerBeloning.getBeloningsnaam());

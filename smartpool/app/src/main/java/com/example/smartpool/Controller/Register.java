@@ -46,7 +46,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
                 Medewerkerinfo medewerkerinfo = new Medewerkerinfo(
                         String.valueOf(etGebruikersnaam.getText()),
-                        100,
+                        0,
                         String.valueOf(etTlfnmr.getText()),
                         String.valueOf(etWachtwoord.getText()),
                         String.valueOf(etWoonplaats.getText()),

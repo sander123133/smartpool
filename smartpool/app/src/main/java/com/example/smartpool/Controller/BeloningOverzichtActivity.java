@@ -25,10 +25,12 @@ public class BeloningOverzichtActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beloningen_overzicht);
 
+        Bundle extras = getIntent().getExtras();
+        String gebruikersnaam = extras.getString("GebruikerIngelogd");
         mDatabase = new Database(this);
 
         //haal beloningen van ingelogde gebruiker op uit database
-        beloningenMedewerker = mDatabase.geefAlleBeloningenMedewerker("DaveyvZetten");
+        beloningenMedewerker = mDatabase.geefAlleBeloningenMedewerker("IngevZetten");
 
         for(MedewerkerBeloning mdb: beloningenMedewerker){
             Log.d("BeloningenOverzicht", "beloning: " + mdb.getTransactienummer());

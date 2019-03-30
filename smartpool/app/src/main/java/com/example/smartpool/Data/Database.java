@@ -50,7 +50,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String MEDEWERKERBELONING_KOLOM_BELONINGSNAAM = "Beloningsnaam";
     private static final String MEDEWERKERBELONING_KOLOM_GEBRUIKERSNAAM = "Gebruikersnaam";
     private static final String MEDEWERKERBELONING_KOLOM_KORTINGSCODE = "Kortingscode";
-    private static final String MEDEWERKERBELONING_KOLOM_DATUM  = "Datum";
+    private static final String MEDEWERKERBELONING_KOLOM_DATUM = "Datum";
 
     //tabel BeloningWaardeCredit
     private static final String BWC_TABEL_NAAM = "BeloningWaardeCredit";
@@ -155,7 +155,7 @@ public class Database extends SQLiteOpenHelper {
                 "REFERENCES " + BEDRIJFRANG_TABEL_NAAM + "(" + BEDRIJFRANG_KOLOM_BEDRIJFSNAAM + ") )");
 
         //tabel MedewerkerBeloning
-        sqLiteDatabase.execSQL("CREATE TABLE " + MEDEWERKERBELONING_TABEL_NAAM  +  " ( " +
+        sqLiteDatabase.execSQL("CREATE TABLE " + MEDEWERKERBELONING_TABEL_NAAM + " ( " +
                 MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 MEDEWERKERBELONING_KOLOM_BELONINGSNAAM + " TEXT NOT NULL, " +
                 MEDEWERKERBELONING_KOLOM_WAARDE + " NUMERIC NOT NULL, " +
@@ -166,7 +166,7 @@ public class Database extends SQLiteOpenHelper {
                 MEDEWERKER_TABEL_NAAM + "(" + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + "), " +
                 //"PRIMARY KEY(" + MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + "), " +
                 "FOREIGN KEY(" + MEDEWERKERBELONING_KOLOM_BELONINGSNAAM + ", " + MEDEWERKERBELONING_KOLOM_WAARDE + ") " +
-                "REFERENCES " + BWC_TABEL_NAAM + "(" + BWC_KOLOM_BELONINGSNAAM + ", " + BWC_KOLOM_WAARDE +") )");
+                "REFERENCES " + BWC_TABEL_NAAM + "(" + BWC_KOLOM_BELONINGSNAAM + ", " + BWC_KOLOM_WAARDE + ") )");
 
         //tabel MedewerkerRang
         sqLiteDatabase.execSQL("CREATE TABLE " + MEDEWERKERRANG_TABEL_NAAM + "(" +
@@ -221,7 +221,7 @@ public class Database extends SQLiteOpenHelper {
                 "REFERENCES " + AUTOINFO_TABEL_NAAM + "(" + AUTOINFO_KOLOM_KENTEKEN + ")," +
                 "FOREIGN KEY(" + RITINFO_KOLOM_QRCODE + ")" +
                 "REFERENCES " + QRCODE_TABEL_NAAM + "(" + QRCODE_KOLOM_QRCODE + ")," +
-                "UNIQUE(" + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_GEBRUIKERSNAAM  + ") )");
+                "UNIQUE(" + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_GEBRUIKERSNAAM + ") )");
 
 //tabel AanmeldingRit
         sqLiteDatabase.execSQL("CREATE TABLE " + AANMELDING_TABEL_NAAM + "(" +
@@ -256,7 +256,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<BeloningWaardeCredit> geefAlleBeloningen(){
+    public ArrayList<BeloningWaardeCredit> geefAlleBeloningen() {
 
         ArrayList<BeloningWaardeCredit> beloningen = new ArrayList<>();
 
@@ -264,7 +264,7 @@ public class Database extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT * FROM " + BWC_TABEL_NAAM + ";", null);
         res.moveToFirst();
 
-        while (!res.isAfterLast()){
+        while (!res.isAfterLast()) {
 
             BeloningWaardeCredit bwc = new BeloningWaardeCredit();
 
@@ -293,7 +293,7 @@ public class Database extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT * FROM " + RITINFO_TABEL_NAAM + ";", null);
         res.moveToFirst();
 
-        while (!res.isAfterLast()){
+        while (!res.isAfterLast()) {
 
             RitInfo ri = new RitInfo();
 
@@ -315,7 +315,7 @@ public class Database extends SQLiteOpenHelper {
         return ritInfoArrayList;
     }
 
-    public boolean insertBeloning(BeloningWaardeCredit beloningWaardeCredit){
+    public boolean insertBeloning(BeloningWaardeCredit beloningWaardeCredit) {
 
         Log.d(TAG, "insertBeloning: aangeroepen");
 
@@ -335,7 +335,7 @@ public class Database extends SQLiteOpenHelper {
         close();
 
 
-        return  true;
+        return true;
 
     }
 
@@ -356,7 +356,7 @@ public class Database extends SQLiteOpenHelper {
         close();
 
 
-        return  true;
+        return true;
 
     }
 
@@ -379,26 +379,25 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(RITINFO_KOLOM_TIJD_TERUGRIJDEN, ritInfo.getTijdTerug());
 
 
-
         db.insert(RITINFO_TABEL_NAAM, null, contentValues);
         close();
 
         Log.d(TAG, "insert ritinfo: " + ritInfo.getKenteken());
 
 
-        return  true;
+        return true;
     }
 
-    public void createTestData(){
+    public void createTestData() {
 
         Log.d(TAG, "createTestData: Called");
 
-        Cursor res = getReadableDatabase().rawQuery("SELECT * FROM "+ BWC_TABEL_NAAM + ";", null);
+        Cursor res = getReadableDatabase().rawQuery("SELECT * FROM " + BWC_TABEL_NAAM + ";", null);
         res.moveToFirst();
 
-        try{
-            if (res.isNull(0));
-        }catch (CursorIndexOutOfBoundsException c){
+        try {
+            if (res.isNull(0)) ;
+        } catch (CursorIndexOutOfBoundsException c) {
             Log.d(TAG, "createTestData: NO TEST DATA AVAILABLE CONFIRMED");
 
             ArrayList<BeloningWaardeCredit> beloningen = genereerBeloningen();
@@ -408,7 +407,7 @@ public class Database extends SQLiteOpenHelper {
             Log.d(TAG, "createTestData: Creating BeloningWaardeCredit TEST DATA");
             SQLiteDatabase db = getWritableDatabase();
 
-            for(BeloningWaardeCredit bwc: beloningen){
+            for (BeloningWaardeCredit bwc : beloningen) {
                 insertBeloning(bwc);
             }
 
@@ -421,7 +420,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<BeloningWaardeCredit> genereerBeloningen(){
+    public ArrayList<BeloningWaardeCredit> genereerBeloningen() {
 
         ArrayList<BeloningWaardeCredit> beloningen = new ArrayList<>();
 
@@ -449,7 +448,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public boolean insertMedewerkerBeloning(MedewerkerBeloning medewerkerBeloning){
+    public boolean insertMedewerkerBeloning(MedewerkerBeloning medewerkerBeloning) {
 
         Log.d(TAG, "insertMedewerkerBeloning: aangeroepen");
 
@@ -464,13 +463,18 @@ public class Database extends SQLiteOpenHelper {
 
         Log.d(TAG, "insert medewerkerbeloning: " + medewerkerBeloning.getBeloningsnaam());
 
-        db.insert(MEDEWERKERBELONING_TABEL_NAAM, null, contentValues);
-        close();
+        long result = db.insert(MEDEWERKERBELONING_TABEL_NAAM, null, contentValues);
+        if (result == -1) {
+            return false;
+        } else {
+            close();
+            return true;
+        }
 
-        return true;
+
     }
 
-    public ArrayList<MedewerkerBeloning> geefAlleBeloningenMedewerker(String gebruikersnaam){
+    public ArrayList<MedewerkerBeloning> geefAlleBeloningenMedewerker(String gebruikersnaam) {
 
         Log.d(TAG, "geefAlleBeloningenMedewerker: aangeroepen");
         ArrayList<MedewerkerBeloning> beloningenMedewerker = new ArrayList<>();
@@ -479,7 +483,7 @@ public class Database extends SQLiteOpenHelper {
         Cursor res = sqLiteDatabase.rawQuery("SELECT * FROM " + MEDEWERKERBELONING_TABEL_NAAM + " WHERE " + MEDEWERKERBELONING_KOLOM_GEBRUIKERSNAAM + " = '" + gebruikersnaam + "';", null);
         res.moveToFirst();
 
-        while (!res.isAfterLast()){
+        while (!res.isAfterLast()) {
 
             MedewerkerBeloning mdb = new MedewerkerBeloning();
 
@@ -501,7 +505,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void verwijderBeloning(int transactienummer){
+    public void verwijderBeloning(int transactienummer) {
 
         Log.d("Database", "transactienummer: " + transactienummer);
 
@@ -513,11 +517,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-
-
-
-
-    public void insertMedewerker(Medewerkerinfo medewerkerinfo){
+    public void insertMedewerker(Medewerkerinfo medewerkerinfo) {
 
         Log.d(TAG, "insertBeloning: aangeroepen");
 
@@ -542,10 +542,10 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public Medewerkerinfo geefMedewerker(String gebruikersnaam){
+    public Medewerkerinfo geefMedewerker(String gebruikersnaam) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + MEDEWERKER_TABEL_NAAM + " WHERE " + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + " = '" + gebruikersnaam + "';" , null);
+        Cursor res = db.rawQuery("SELECT * FROM " + MEDEWERKER_TABEL_NAAM + " WHERE " + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + " = '" + gebruikersnaam + "';", null);
         res.moveToFirst();
 
         Medewerkerinfo medewerkerinfo = new Medewerkerinfo();
@@ -564,15 +564,15 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public Boolean gebruikerwachtwoord(String gebruikersnaam, String wachtwoord){
+    public Boolean gebruikerwachtwoord(String gebruikersnaam, String wachtwoord) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from Medewerkerinfo where gebruikersnaam = '" + gebruikersnaam + "'  and wachtwoord = '" + wachtwoord + "';", null);
-        if(cursor.getCount()>0) return true;
+        if (cursor.getCount() > 0) return true;
         else return false;
 
     }
 
-    public void insertBedrijf(BedrijfRang bedrijfRang){
+    public void insertBedrijf(BedrijfRang bedrijfRang) {
 
         Log.d(TAG, "insertBedrijf: aangeroepen");
 
@@ -592,7 +592,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void updateCreditTeBesteden(int creditaantal, String gebruikersnaam){
+    public void updateCreditTeBesteden(int creditaantal, String gebruikersnaam) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + MEDEWERKER_TABEL_NAAM + " SET " + MEDEWERKER_KOLOM_CREDITS_BESTEDEN + " = " + creditaantal + " WHERE " + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + " = '" + gebruikersnaam + "';";
@@ -602,7 +602,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void insertRit(RitInfo ritInfo){
+    public void insertRit(RitInfo ritInfo) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -622,20 +622,19 @@ public class Database extends SQLiteOpenHelper {
 
         try {
             db.insert(RITINFO_TABEL_NAAM, null, contentValues);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         close();
     }
 
-    public void insertAanmelding(RitAanmelding aanmelding){
+    public void insertAanmelding(RitAanmelding aanmelding) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(AANMELDING_KOLOM_DATUM, aanmelding.getDatum() );
+        contentValues.put(AANMELDING_KOLOM_DATUM, aanmelding.getDatum());
         contentValues.put(AANMELDING_KOLOM_GEBRUIKERSNAAM, aanmelding.getGebruikersnaam());
-        switch (aanmelding.getCarpoolcategorie()){
+        switch (aanmelding.getCarpoolcategorie()) {
             case BACKUP_BESTUUDER:
                 contentValues.put(AANMELDING_KOLOM_CARPOOLCATEGORIE, "Back up");
                 break;
@@ -648,8 +647,6 @@ public class Database extends SQLiteOpenHelper {
         }
         db.insert(AANMELDING_TABEL_NAAM, null, contentValues);
     }
-
-
 
 
 }

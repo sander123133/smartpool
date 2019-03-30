@@ -21,6 +21,7 @@ public class AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHo
 
     private ArrayList<BeloningWaardeCredit> mDataset;
     private Context mContext;
+    private String gebruikersnaam;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -56,15 +57,18 @@ public class AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHo
                     GifsthopDetailActivity.class);
 
             giftshopDetailIntent.putExtra("Beloning", mBeloning);
+            giftshopDetailIntent.putExtra("GebruikersnaamIngelogd", gebruikersnaam);
 
             view.getContext().startActivity(giftshopDetailIntent);
         }
     }
 
     //constructor voor adapter
-    public AdapterGiftshop(ArrayList<BeloningWaardeCredit> mDataset, Context mContext){
+    public AdapterGiftshop(ArrayList<BeloningWaardeCredit> mDataset, Context mContext, String gebruikersnaam){
         this.mDataset = mDataset;
         this.mContext = mContext;
+        this.gebruikersnaam = gebruikersnaam;
+
     }
 
     //Nieuwe views maken (invoked by the layout manager)

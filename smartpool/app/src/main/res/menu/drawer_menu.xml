@@ -18,4 +18,9 @@
         android:icon="@drawable/ic_card_giftcard_black_24dp"
         android:title="Mijn beloningen" />
 
+    <item
+        android:id="@+id/nav_uitloggen"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"
+        android:title="Uitloggen" />
+
 </menu>
