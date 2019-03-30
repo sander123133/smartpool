@@ -501,10 +501,12 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void verwijderBeloning(String transactienummer){
+    public void verwijderBeloning(int transactienummer){
+
+        Log.d("Database", "transactienummer: " + transactienummer);
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        String query = "DELETE FROM " + MEDEWERKERBELONING_TABEL_NAAM + " WHERE " + MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + " = '" + transactienummer + "';";
+        String query = "DELETE FROM " + MEDEWERKERBELONING_TABEL_NAAM + " WHERE " + MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + " = " + transactienummer + ";";
 
         sqLiteDatabase.execSQL(query);
         close();

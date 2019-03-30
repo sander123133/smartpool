@@ -27,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
 
         db = new Database(this);
 
+        db.updateCreditTeBesteden(100, "DaveyvZetten");
+
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);

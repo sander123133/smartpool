@@ -60,7 +60,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
         mLinkWebsite.setText(bwc.getWebsiteURL());
         Picasso.with(this).load(bwc.getFoto()).into(mBeloningFoto);
 
-        ingelogdeGebruiker = db.geefMedewerker("IngevZetten");
+        ingelogdeGebruiker = db.geefMedewerker("DaveyvZetten");
 
         //controleer of creditaantal voldoende is om beloning te kopen,
         //voeg beloning toe als dit zo is, geef een melding als dit niet zo is.

@@ -18,6 +18,7 @@ public class BeloningOverzichtActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Database mDatabase;
+    private ArrayList<MedewerkerBeloning> beloningenMedewerker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,10 +28,10 @@ public class BeloningOverzichtActivity extends AppCompatActivity {
         mDatabase = new Database(this);
 
         //haal beloningen van ingelogde gebruiker op uit database
-        ArrayList<MedewerkerBeloning> beloningenMedewerker = mDatabase.geefAlleBeloningenMedewerker("IngevZetten");
+        beloningenMedewerker = mDatabase.geefAlleBeloningenMedewerker("DaveyvZetten");
 
         for(MedewerkerBeloning mdb: beloningenMedewerker){
-            Log.d("BeloningenOverzicht", "beloning: " + mdb.getBeloningsnaam());
+            Log.d("BeloningenOverzicht", "beloning: " + mdb.getTransactienummer());
         }
 
         //referentie naar recyclerview ophalen

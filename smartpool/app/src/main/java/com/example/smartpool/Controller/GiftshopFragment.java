@@ -36,7 +36,7 @@ public class GiftshopFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mDatabase = new Database(this.getContext());
-        medewerkerinfo = mDatabase.geefMedewerker("IngevZetten");
+        medewerkerinfo = mDatabase.geefMedewerker("DaveyvZetten");
 
         Log.d("GiftshopFragment", "medewerker ingelogd:" + medewerkerinfo.getGebruikersnaam());
 
@@ -69,7 +69,7 @@ public class GiftshopFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        medewerkerinfo = mDatabase.geefMedewerker("IngevZetten");
+        medewerkerinfo = mDatabase.geefMedewerker("DaveyvZetten");
         tvCreditBesteedbaar.setText(Integer.toString(medewerkerinfo.getCreditaantal()));
     }
 }
