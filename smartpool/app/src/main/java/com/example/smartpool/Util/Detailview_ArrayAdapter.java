@@ -1,4 +1,4 @@
-package com.example.smartpool.Controller;
+package com.example.smartpool.Util;
 
 import android.content.Context;
 import android.provider.ContactsContract;

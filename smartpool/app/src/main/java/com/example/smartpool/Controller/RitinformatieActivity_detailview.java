@@ -15,6 +15,7 @@ import com.example.smartpool.Domain.Medewerkerinfo;
 import com.example.smartpool.Domain.RitAanmelding;
 import com.example.smartpool.Domain.RitInfo;
 import com.example.smartpool.R;
+import com.example.smartpool.Util.Detailview_ArrayAdapter;
 import com.example.smartpool.Util.Utility;
 
 import java.util.ArrayList;
@@ -71,9 +72,13 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
 
         meldaanAlsBackupBtn.setOnClickListener(v -> {
             database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.BACKUP_BESTUUDER,ritInfo.getRitnummer()));
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         });
         meldaanAlsMeerijder.setOnClickListener(v -> {
             database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.MEERIJDER,ritInfo.getRitnummer()));
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         });
 
         ritVoltooidBtn.setOnClickListener(v -> {
@@ -91,6 +96,16 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
                 }
             }
             dataString.append("]}");
+            for(RitAanmelding ritAanmelding : aangemelde_medewerkers) {
+                switch (ritAanmelding.getCarpoolcategorie()) {
+                    case BESTUUDER:
+                    database.updateCreditTeBesteden(3,ritAanmelding.getGebruikersnaam());
+                    case MEERIJDER:
+                        database.updateCreditTeBesteden(1,ritAanmelding.getGebruikersnaam());
+                    case BACKUP_BESTUUDER:
+                        database.updateCreditTeBesteden(2,ritAanmelding.getGebruikersnaam());
+                }
+            }
             Intent intent = new Intent(getApplicationContext(), QRGeneratorActivity.class);
             intent.putExtra("data", dataString.toString());
             startActivity(intent);

@@ -622,6 +622,7 @@ public class Database extends SQLiteOpenHelper {
         }
         contentValues.put(AANMELDING_KOLOM_RITID, aanmelding.getRitnummer());
         db.insert(AANMELDING_TABEL_NAAM, null, contentValues);
+        close();
     }
 
     public AutoInfo getAuto(String kenteken){
@@ -632,7 +633,7 @@ public class Database extends SQLiteOpenHelper {
         AutoInfo autoInfo = new AutoInfo(kenteken,null,null);
         autoInfo.setKleur(cursor.getString(cursor.getColumnIndex(AUTOINFO_KOLOM_KLEUR)));
         autoInfo.setMerk(cursor.getString(cursor.getColumnIndex(AUTOINFO_KOLOM_MERK)));
-
+        close();
         return autoInfo;
     }
 
@@ -660,7 +661,7 @@ public class Database extends SQLiteOpenHelper {
           ritAanmeldingen.add(ritAanmelding);
           cursor.moveToNext();
       }
-
+        close();
        return  ritAanmeldingen;
     }
 
@@ -681,6 +682,7 @@ public class Database extends SQLiteOpenHelper {
         medewerkerinfo.setTelefoonnumer(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_TELEFOONNUMMER)));
         medewerkerinfo.setWoonplaats(res.getString(res.getColumnIndex(MEDEWERKER_KOLOM_WOONPLAATS)));
         medewerkerinfo.setCarpoolcategorie(ritAanmelding.getCarpoolcategorie());
+        close();
         return medewerkerinfo;
     }
 
@@ -702,6 +704,7 @@ public class Database extends SQLiteOpenHelper {
                 break;
 
         }
+        close();
         return carpoolcategorie;
     }
 
@@ -715,8 +718,66 @@ public class Database extends SQLiteOpenHelper {
            Log.d(TAG, "index: " + cursor.getInt(cursor.getColumnIndex(AANMELDING_KOLOM_RITID)));
            cursor.moveToNext();
         }
+        close();
+    }
+
+    public void deleteAanmelding(String gebruikersnaam, String datum){
+       SQLiteDatabase db = this.getWritableDatabase();
+       String querry = "DELETE FROM " + AANMELDING_TABEL_NAAM + " WHERE " + "gebruikersnaam = '" + gebruikersnaam + "' AND datum = '" + datum + "';";
+       db.execSQL(querry);
+       close();
+    }
+
+    public ArrayList<RitAanmelding> getRitaanmeldingenOpBasisGebruikersnaam(String gebruikersnaam){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String querry = "SELECT * FROM " + AANMELDING_TABEL_NAAM + " WHERE " + " gebruikersnaam  = " + "'" + gebruikersnaam + "'; ";
+        Cursor res = db.rawQuery(querry, null);
+        res.moveToFirst();
+        ArrayList<RitAanmelding> aanmeldingen = new ArrayList<>();
+        while(!res.isAfterLast()) {
+            RitAanmelding aanmelding = new RitAanmelding(null, null, null, 0);
+            aanmelding.setGebruikersnaam(res.getString(res.getColumnIndex(AANMELDING_KOLOM_GEBRUIKERSNAAM)));
+            switch (res.getString(res.getColumnIndex(AANMELDING_KOLOM_CARPOOLCATEGORIE))){
+                case"bestuuder":
+                    aanmelding.setCarpoolcategorie(Carpoolcategorie.BESTUUDER);
+                    break;
+                case"back up":
+                    aanmelding.setCarpoolcategorie(Carpoolcategorie.BACKUP_BESTUUDER);
+                    break;
+                case"meerijder":
+                    aanmelding.setCarpoolcategorie(Carpoolcategorie.MEERIJDER);
+                    break;
+            }
+            aanmelding.setDatum(res.getString(res.getColumnIndex(AANMELDING_KOLOM_DATUM)));
+            aanmelding.setRitnummer(res.getInt(res.getColumnIndex(AANMELDING_KOLOM_RITID)));
+            setRitaanmeldingExtras(aanmelding);
+            aanmeldingen.add(aanmelding);
+            res.moveToNext();
+        }
+        close();
+        return  aanmeldingen;
+
+    }
+
+    /**
+     * dit heeft te maken met de getRitaanmeldingenOpBasisGebruikersnaam, omdat sommige onderdelen
+     * van dit lijst object in een andere tabel staan dan ritaanmelding wordt er gebruikt gemaakt
+     * van deze methode
+     */
+    private RitAanmelding setRitaanmeldingExtras(RitAanmelding ritAanmelding){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String querry = "SELECT * FROM " + RITINFO_TABEL_NAAM + " WHERE " + "ritnummer = " + ritAanmelding.getRitnummer() + ";";
+        Cursor cursor  = db.rawQuery(querry, null);
+        cursor.moveToFirst();
+        ritAanmelding.setBegintijd(cursor.getString(cursor.getColumnIndex(RITINFO_KOLOM_STARTTIJD)));
+        ritAanmelding.setOpstapplaats(cursor.getString(cursor.getColumnIndex(RITINFO_KOLOM_OPSTAPPLAATS)));
+        ritAanmelding.setEindBestemming(cursor.getString(cursor.getColumnIndex(RITINFO_KOLOM_EINDBESTEMMING)));
+
+        close();
+        return ritAanmelding;
+
     }
 
 
-
 }
+
