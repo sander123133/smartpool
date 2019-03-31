@@ -21,8 +21,11 @@ import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 
 import com.example.smartpool.Data.Database;
+import com.example.smartpool.Domain.AutoInfo;
 import com.example.smartpool.Domain.BedrijfRang;
+import com.example.smartpool.Domain.Carpoolcategorie;
 import com.example.smartpool.Domain.Medewerkerinfo;
+import com.example.smartpool.Domain.RitAanmelding;
 import com.example.smartpool.Domain.RitInfo;
 import com.example.smartpool.R;
 import com.example.smartpool.Util.AdapterRitoverzicht;
@@ -78,7 +81,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         db.createTestData();
+            db.insertMedewerker(new Medewerkerinfo("sander123133",0,"123456789","hallodaar","bergen op zoom", "Sander","", "GPI"));
+            db.insertMedewerker(new Medewerkerinfo("oof",0,"987654321","hallonietdaar","bergen op zoom", "oof","", "GPI"));
+            db.insertMedewerker(new Medewerkerinfo("rogier",0,"1122334455","hallonietdaaralweer","bergen op zoom", "rogier","", "GPI"));
+            db.insertRitInfo(new RitInfo("Bergen op zoom", "Roosendaal", "01-04-2019", "07:00", "17:00", 3, "sander123133", "nog niet vol", "12-345_67", ""));
+            db.insertAutoInfo(new AutoInfo("12-345_67", "mazda", "rood"));
+            db.insertAanmelding(new RitAanmelding("02-04-2019", "sander123133", Carpoolcategorie.BESTUUDER, 2));
+            db.insertAanmelding(new RitAanmelding("01-04-2019", "sander123133", Carpoolcategorie.BESTUUDER, 1));
+            db.insertAanmelding(new RitAanmelding("01-04-2019", "oof", Carpoolcategorie.BACKUP_BESTUUDER,1));
 
+        db.checkRitAanmeldingen();
 
         //TESTDATA
         //BedrijfRang bedrijfRang = new BedrijfRang("DHL", 40, 3);

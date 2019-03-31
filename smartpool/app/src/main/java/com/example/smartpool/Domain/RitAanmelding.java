@@ -5,11 +5,21 @@ public class RitAanmelding {
     private String datum;
     private String gebruikersnaam;
     private Carpoolcategorie carpoolcategorie;
+    private int ritnummer;
 
-    public RitAanmelding(String datum, String gebruikersnaam, Carpoolcategorie carpoolcategorie) {
+    public RitAanmelding(String datum, String gebruikersnaam, Carpoolcategorie carpoolcategorie, int ritnummer) {
         this.datum = datum;
         this.gebruikersnaam = gebruikersnaam;
         this.carpoolcategorie = carpoolcategorie;
+        this.ritnummer = ritnummer;
+    }
+
+    public int getRitnummer() {
+        return ritnummer;
+    }
+
+    public void setRitnummer(int ritnummer) {
+        this.ritnummer = ritnummer;
     }
 
     public String getDatum() {

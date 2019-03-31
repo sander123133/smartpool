@@ -14,6 +14,7 @@ public class RitInfo implements Serializable {
     private String status;
     private String kenteken;
     private String qrCode;
+    private int ritnummer;
 
     public RitInfo(String opstapplaats, String eindbestmming, String datum, String tijdHeen, String tijdTerug, int vrijePlaatsen, String gebruikersnaam, String status, String kenteken, String qrCode){
         this.opstapplaats = opstapplaats;
@@ -26,6 +27,28 @@ public class RitInfo implements Serializable {
         this. status = status;
         this.kenteken = kenteken;
         this.qrCode = qrCode;
+    }
+
+    public RitInfo(String opstapplaats, String eindbestmming, String datum, String tijdHeen, String tijdTerug, int vrijePlaatsen, String gebruikersnaam, String status, String kenteken, String qrCode, int ritnummer) {
+        this.opstapplaats = opstapplaats;
+        this.eindbestmming = eindbestmming;
+        this.datum = datum;
+        this.tijdHeen = tijdHeen;
+        this.tijdTerug = tijdTerug;
+        this.vrijePlaatsen = vrijePlaatsen;
+        this.gebruikersnaam = gebruikersnaam;
+        this.status = status;
+        this.kenteken = kenteken;
+        this.qrCode = qrCode;
+        this.ritnummer = ritnummer;
+    }
+
+    public int getRitnummer() {
+        return ritnummer;
+    }
+
+    public void setRitnummer(int ritnummer) {
+        this.ritnummer = ritnummer;
     }
 
     public RitInfo(String opstapplaats, String eindbestmming, String datum, String tijdHeen) {
