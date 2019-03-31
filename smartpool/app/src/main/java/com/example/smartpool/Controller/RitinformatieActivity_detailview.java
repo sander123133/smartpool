@@ -106,6 +106,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
                         database.updateCreditTeBesteden(2,ritAanmelding.getGebruikersnaam());
                 }
                 database.voegGeredenRitToe(ritInfo);
+                database.verwijderRit(ritInfo.getRitnummer());
             }
             Intent intent = new Intent(getApplicationContext(), QRGeneratorActivity.class);
             intent.putExtra("data", dataString.toString());

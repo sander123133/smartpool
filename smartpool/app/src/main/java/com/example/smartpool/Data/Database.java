@@ -830,6 +830,14 @@ public class Database extends SQLiteOpenHelper {
             Log.d(TAG, "insert ritinfo: " + ritInfo.getKenteken());
         }
 
+    public void verwijderRit(int id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String querry = "DELETE FROM " + AANMELDING_TABEL_NAAM + " WHERE ritnummer = " + id + ";";
+        sqLiteDatabase.execSQL(querry);
+        querry = "DELETE FROM " + RITINFO_TABEL_NAAM + " WHERE ritnummer = " + id + ";";
+        sqLiteDatabase.execSQL(querry);
+    }
+
 
     }
 
