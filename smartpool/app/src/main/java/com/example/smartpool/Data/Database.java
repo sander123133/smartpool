@@ -30,7 +30,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "smartpoolDB";
 
-    private static final int DB_V = 8;
+    private static final int DB_V = 11;
 
 
     //tabel en kolomnamen
@@ -88,6 +88,19 @@ public class Database extends SQLiteOpenHelper {
     private static final String RITINFO_KOLOM_KENTEKEN = "Kenteken";
     private static final String RITINFO_KOLOM_QRCODE = "qrcode";
     private static final String RITINFO_KOLOM_RITNUMMER = "ritnummer";
+
+    //tabel RitInformatieGeredenRit
+    private static final String RITINFOGEREDEN_TABEL_NAAM = "RitInformatieGereden";
+    private static final String RITINFOGEREDEN_KOLOM_GEBRUIKERSNAAM = "Gebruikersnaam";
+    private static final String RITINFOGEREDEN_KOLOM_OPSTAPPLAATS = "Opstapplaats";
+    private static final String RITINFOGEREDEN_KOLOM_EINDBESTEMMING = "Eindbestemming";
+    private static final String RITINFOGEREDEN_KOLOM_DATUM = "Datum";
+    private static final String RITINFOGEREDEN_KOLOM_STARTTIJD = "Starttijd";
+    private static final String RITINFOGEREDEN_KOLOM_OPEN_PLAATSEN = "Openplaatsen";
+    private static final String RITINFOGEREDEN_KOLOM_TIJD_TERUGRIJDEN = "Tijdterugrijden";
+    private static final String RITINFOGEREDEN_KOLOM_STATUS = "Status";
+    private static final String RITINFOGEREDEN_KOLOM_KENTEKEN = "Kenteken";
+    private static final String RITINFOGEREDEN_KOLOM_QRCODE = "qrcode";
 
     //tabel AanmeldingRit
     private static final String AANMELDING_TABEL_NAAM = "AanmeldingRit";
@@ -237,6 +250,18 @@ public class Database extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + AANMELDING_KOLOM_GEBRUIKERSNAAM + ", " + AANMELDING_KOLOM_DATUM + ", " + AANMELDING_KOLOM_RITID + ") " +
                 "REFERENCES " + RITINFO_TABEL_NAAM + "(" + RITINFO_KOLOM_GEBRUIKERSNAAM + ", " + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_RITNUMMER + ") )");
 
+        sqLiteDatabase.execSQL("CREATE TABLE " + RITINFOGEREDEN_TABEL_NAAM + "( " +
+                RITINFOGEREDEN_KOLOM_GEBRUIKERSNAAM + " TEXT, " +
+                RITINFOGEREDEN_KOLOM_OPSTAPPLAATS + " TEXT NOT NULL, " +
+                RITINFOGEREDEN_KOLOM_EINDBESTEMMING + " TEXT NOT NULL, " +
+                RITINFOGEREDEN_KOLOM_DATUM + " TEXT, " +
+                RITINFOGEREDEN_KOLOM_STARTTIJD + " TEXT NOT NULL, " +
+                RITINFOGEREDEN_KOLOM_OPEN_PLAATSEN + " INTEGER NOT NULL, " +
+                RITINFOGEREDEN_KOLOM_TIJD_TERUGRIJDEN + " TEXT NOT NULL, " +
+                RITINFOGEREDEN_KOLOM_STATUS + " TEXT NOT NULL, " +
+                RITINFOGEREDEN_KOLOM_KENTEKEN + " TEXT NOT NULL, " +
+                RITINFOGEREDEN_KOLOM_QRCODE + " TEXT NOT NULL " + ");");
+
     }
 
     @Override
@@ -253,6 +278,7 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE " + AUTOINFO_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + BEDRIJFRANG_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + BWC_TABEL_NAAM);
+        sqLiteDatabase.execSQL("DROP TABLE " + RITINFOGEREDEN_TABEL_NAAM);
 
         onCreate(sqLiteDatabase);
 
@@ -778,6 +804,34 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public void voegGeredenRitToe(RitInfo ritInfo){
 
-}
+            Log.d(TAG, "insertRitInfo: aangeroepen");
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put(RITINFOGEREDEN_KOLOM_DATUM, ritInfo.getDatum());
+            contentValues.put(RITINFOGEREDEN_KOLOM_EINDBESTEMMING, ritInfo.getEindbestmming());
+            contentValues.put(RITINFOGEREDEN_KOLOM_GEBRUIKERSNAAM, ritInfo.getGebruikersnaam());
+            contentValues.put(RITINFOGEREDEN_KOLOM_KENTEKEN, ritInfo.getKenteken());
+            contentValues.put(RITINFOGEREDEN_KOLOM_OPEN_PLAATSEN, ritInfo.getVrijePlaatsen());
+            contentValues.put(RITINFOGEREDEN_KOLOM_OPSTAPPLAATS, ritInfo.getOpstapplaats());
+            contentValues.put(RITINFOGEREDEN_KOLOM_QRCODE, ritInfo.getQrCode());
+            contentValues.put(RITINFOGEREDEN_KOLOM_STARTTIJD, ritInfo.getTijdHeen());
+            contentValues.put(RITINFOGEREDEN_KOLOM_STATUS, ritInfo.getStatus());
+            contentValues.put(RITINFOGEREDEN_KOLOM_TIJD_TERUGRIJDEN, ritInfo.getTijdTerug());
+
+
+
+            db.insert(RITINFOGEREDEN_TABEL_NAAM, null, contentValues);
+            close();
+
+            Log.d(TAG, "insert ritinfo: " + ritInfo.getKenteken());
+        }
+
+
+    }
+
+
 

@@ -105,6 +105,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
                     case BACKUP_BESTUUDER:
                         database.updateCreditTeBesteden(2,ritAanmelding.getGebruikersnaam());
                 }
+                database.voegGeredenRitToe(ritInfo);
             }
             Intent intent = new Intent(getApplicationContext(), QRGeneratorActivity.class);
             intent.putExtra("data", dataString.toString());

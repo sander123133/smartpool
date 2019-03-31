@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <activity android:name=".Controller.AangemeldeRittenAcitivity">
+        <activity android:name=".Controller.MainActivity">
 
 
 
@@ -31,6 +31,7 @@
 
         <activity android:name=".Controller.QRGeneratorActivity"/>
         <activity android:name=".Controller.AddActivity" />
+        <activity android:name=".Controller.AangemeldeRittenAcitivity"/>
 
     </application>
 
