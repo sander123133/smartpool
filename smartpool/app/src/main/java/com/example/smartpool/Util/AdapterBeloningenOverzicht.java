@@ -43,8 +43,8 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
         public TextView boWaarde;
         public TextView boDatum;
         public TextView boKortingscode;
-        public ImageButton btnVerwijder;
-        public ImageButton btnDownload;
+        public TextView tvVerwijder;
+        public TextView tvDownload;
 
 
         public ViewHolder(@NonNull View itemView, MyClicklistener listener) {
@@ -58,11 +58,11 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
             boWaarde = (TextView) view.findViewById(R.id.bo_waarde);
             boDatum = (TextView) view.findViewById(R.id.bo_datum);
             boKortingscode = (TextView) view.findViewById(R.id.bo_kortingscode);
-            btnDownload = (ImageButton) view.findViewById(R.id.bo_btnVerwijderBeloning2);
-            btnVerwijder = (ImageButton) view.findViewById(R.id.bo_btnDownloadTicket);
+            tvDownload = (TextView) view.findViewById(R.id.bo_downloadTicket);
+            tvVerwijder = (TextView) view.findViewById(R.id.bo_verwijderBeloning);
 
-            btnDownload.setOnClickListener(this);
-            btnVerwijder.setOnClickListener(this);
+            tvDownload.setOnClickListener(this);
+            tvVerwijder.setOnClickListener(this);
 
         }
 
@@ -70,10 +70,10 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
         public void onClick(View view) {
 
             switch (view.getId()) {
-                case R.id.bo_btnDownloadTicket:
+                case R.id.bo_downloadTicket:
                     listener.onDownload(getAdapterPosition());
                     break;
-                case R.id.bo_btnVerwijderBeloning2:
+                case R.id.bo_verwijderBeloning:
                     listener.onDelete(getAdapterPosition());
                     break;
                 default:
@@ -133,15 +133,12 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
                 AlertDialog alert11 = builder1.create();
                 alert11.show();
 
-                int transactienummer = medewerkerBeloning.getTransactienummer();
-                mDatabase.verwijderBeloning(transactienummer);
-
 
             }
 
             @Override
             public void onDownload(int p) {
-                Toast.makeText(view.getContext(), "Download ticket", Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), "Deze functie werkt nog niet", Toast.LENGTH_LONG).show();
             }
         });
         return vh;
@@ -153,7 +150,7 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
         medewerkerBeloning = mDataset.get(viewHolder.getAdapterPosition());
 
         viewHolder.boBeloningsnaam.setText(medewerkerBeloning.getBeloningsnaam());
-        viewHolder.boWaarde.setText(Double.toString(medewerkerBeloning.getWaarde()));
+        viewHolder.boWaarde.setText(medewerkerBeloning.getWaarde());
         viewHolder.boDatum.setText(medewerkerBeloning.getDatum());
         viewHolder.boKortingscode.setText(medewerkerBeloning.getKortingscode());
 

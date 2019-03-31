@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Bundle extras = getIntent().getExtras();
         gebruikersnaam = extras.getString("Gebruikersnaam");
+        db.updateCreditTeBesteden(50, gebruikersnaam);
 
         Medewerkerinfo gebrIngelogd = db.geefMedewerker(gebruikersnaam);
 

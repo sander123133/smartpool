@@ -54,7 +54,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
         //waarde uit object koppelen aan layout panes
         this.setTitle(bwc.getBeloningsnaam());
         mBeloningsnaam.setText(bwc.getBeloningsnaam());
-        mWaarde.setText("Waarde: " + Double.toString(bwc.getWaarde()) + " euro");
+        mWaarde.setText(bwc.getWaarde());
         mOmschrijving.setText(bwc.getBeschrijving());
         mCreditAantal.setText(Integer.toString(bwc.getCreditaantal()));
         mLinkWebsite.setText(bwc.getWebsiteURL());

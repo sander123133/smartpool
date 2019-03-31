@@ -28,7 +28,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "smartpoolDB";
 
-    private static final int DB_V = 6;
+    private static final int DB_V = 7;
 
 
     //tabel en kolomnamen
@@ -126,7 +126,7 @@ public class Database extends SQLiteOpenHelper {
         //tabel BeloningWaardeCredit
         sqLiteDatabase.execSQL("CREATE TABLE '" + BWC_TABEL_NAAM + "' ( `" +
                 BWC_KOLOM_BELONINGSNAAM + "` TEXT, `" +
-                BWC_KOLOM_WAARDE + "` NUMERIC, `" +
+                BWC_KOLOM_WAARDE + "` TEXT NOT NULL, `" +
                 BWC_KOLOM_CREDITAANTAL + "` INTEGER NOT NULL, " +
                 BWC_KOLOM_BESCHRIJVING + " TEXT NOT NULL," +
                 BWC_KOLOM_FOTO + " TEXT NOT NULL," +
@@ -158,7 +158,7 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE " + MEDEWERKERBELONING_TABEL_NAAM + " ( " +
                 MEDEWERKERBELONING_KOLOM_TRANSACTIENMR + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 MEDEWERKERBELONING_KOLOM_BELONINGSNAAM + " TEXT NOT NULL, " +
-                MEDEWERKERBELONING_KOLOM_WAARDE + " NUMERIC NOT NULL, " +
+                MEDEWERKERBELONING_KOLOM_WAARDE + " TEXT NOT NULL, " +
                 MEDEWERKERBELONING_KOLOM_KORTINGSCODE + " TEXT NOT NULL, " +
                 MEDEWERKERBELONING_KOLOM_GEBRUIKERSNAAM + " TEXT NOT NULL, " +
                 MEDEWERKERBELONING_KOLOM_DATUM + " TEXT NOT NULL, " +
@@ -272,7 +272,7 @@ public class Database extends SQLiteOpenHelper {
             bwc.setBeloningsnaam(res.getString(res.getColumnIndex(BWC_KOLOM_BELONINGSNAAM)));
             bwc.setBeschrijving(res.getString(res.getColumnIndex(BWC_KOLOM_BESCHRIJVING)));
             bwc.setCreditaantal(res.getInt(res.getColumnIndex(BWC_KOLOM_CREDITAANTAL)));
-            bwc.setWaarde(res.getDouble(res.getColumnIndex(BWC_KOLOM_WAARDE)));
+            bwc.setWaarde(res.getString(res.getColumnIndex(BWC_KOLOM_WAARDE)));
             bwc.setWebsiteURL(res.getString(res.getColumnIndex(BWC_KOLOM_WEBSITEURL)));
             bwc.setFoto(res.getString(res.getColumnIndex(BWC_KOLOM_FOTO)));
 
@@ -425,17 +425,17 @@ public class Database extends SQLiteOpenHelper {
         ArrayList<BeloningWaardeCredit> beloningen = new ArrayList<>();
 
         BeloningWaardeCredit beloning1 = new BeloningWaardeCredit(
-                "vvv cadeaubon", 10, 15, "De VVV Cadeaubon (voorheen VVV Irischeque, daarvoor VVV Geschenkbon) is een cadeaubon in Nederland waarvoor de ontvanger naar eigen keuze iets bij een van de 23.000 aangesloten acceptatiepunten kan kopen.",
+                "vvv cadeaubon", "10 euro", 15, "De VVV Cadeaubon (voorheen VVV Irischeque, daarvoor VVV Geschenkbon) is een cadeaubon in Nederland waarvoor de ontvanger naar eigen keuze iets bij een van de 23.000 aangesloten acceptatiepunten kan kopen.",
                 "https://www.primera.nl/media/catalog/product/cache/1/thumbnail/900x/163b81649b7ef7bc8a00b0066e59ae0a/v/v/vvv_cadeaukaart_front_2.jpg", "https://www.vvvcadeaukaarten.nl/"
         );
 
         BeloningWaardeCredit beloning2 = new BeloningWaardeCredit(
-                "vvv cadeaubon", 20, 30, "De VVV Cadeaubon (voorheen VVV Irischeque, daarvoor VVV Geschenkbon) is een cadeaubon in Nederland waarvoor de ontvanger naar eigen keuze iets bij een van de 23.000 aangesloten acceptatiepunten kan kopen.",
+                "vvv cadeaubon", "20 euro", 30, "De VVV Cadeaubon (voorheen VVV Irischeque, daarvoor VVV Geschenkbon) is een cadeaubon in Nederland waarvoor de ontvanger naar eigen keuze iets bij een van de 23.000 aangesloten acceptatiepunten kan kopen.",
                 "https://www.primera.nl/media/catalog/product/cache/1/thumbnail/900x/163b81649b7ef7bc8a00b0066e59ae0a/v/v/vvv_cadeaukaart_front_2.jpg", "https://www.vvvcadeaukaarten.nl/"
         );
 
         BeloningWaardeCredit beloning3 = new BeloningWaardeCredit(
-                "vvv cadeaubon", 50, 75, "De VVV Cadeaubon (voorheen VVV Irischeque, daarvoor VVV Geschenkbon) is een cadeaubon in Nederland waarvoor de ontvanger naar eigen keuze iets bij een van de 23.000 aangesloten acceptatiepunten kan kopen.",
+                "vvv cadeaubon", "50 euro", 75, "De VVV Cadeaubon (voorheen VVV Irischeque, daarvoor VVV Geschenkbon) is een cadeaubon in Nederland waarvoor de ontvanger naar eigen keuze iets bij een van de 23.000 aangesloten acceptatiepunten kan kopen.",
                 "https://www.primera.nl/media/catalog/product/cache/1/thumbnail/900x/163b81649b7ef7bc8a00b0066e59ae0a/v/v/vvv_cadeaukaart_front_2.jpg", "https://www.vvvcadeaukaarten.nl/"
         );
 
@@ -492,7 +492,7 @@ public class Database extends SQLiteOpenHelper {
             mdb.setGebruikersnaam(res.getString(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_GEBRUIKERSNAAM)));
             mdb.setKortingscode(res.getString(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_KORTINGSCODE)));
             mdb.setTransactienummer(res.getInt(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_TRANSACTIENMR)));
-            mdb.setWaarde(res.getDouble(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_WAARDE)));
+            mdb.setWaarde(res.getString(res.getColumnIndex(MEDEWERKERBELONING_KOLOM_WAARDE)));
 
             beloningenMedewerker.add(mdb);
             res.moveToNext();

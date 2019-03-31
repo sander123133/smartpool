@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.example.smartpool.Data.Database;
 import com.example.smartpool.Domain.MedewerkerBeloning;
 import com.example.smartpool.R;
 import com.example.smartpool.Util.AdapterBeloningenOverzicht;
+
 import java.util.ArrayList;
 
 public class BeloningOverzichtActivity extends AppCompatActivity {
@@ -30,23 +33,26 @@ public class BeloningOverzichtActivity extends AppCompatActivity {
         mDatabase = new Database(this);
 
         //haal beloningen van ingelogde gebruiker op uit database
-        beloningenMedewerker = mDatabase.geefAlleBeloningenMedewerker("IngevZetten");
+        beloningenMedewerker = mDatabase.geefAlleBeloningenMedewerker(gebruikersnaam);
 
-        for(MedewerkerBeloning mdb: beloningenMedewerker){
-            Log.d("BeloningenOverzicht", "beloning: " + mdb.getTransactienummer());
+        if (beloningenMedewerker.size() == 0) {
+            Toast.makeText(this, "U heeft nog geen beloningen gekocht", Toast.LENGTH_LONG).show();
+        } else {
+
+            //referentie naar recyclerview ophalen
+            mRecyclerView = (RecyclerView) findViewById(R.id.rv_beloningen_overzicht);
+
+            //Linear layout manager voor positionering van items in de recyclerview
+            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            //maak adapter
+            mAdapter = new AdapterBeloningenOverzicht(beloningenMedewerker, this);
+            //set adapter
+            mRecyclerView.setAdapter(mAdapter);
+
         }
 
-        //referentie naar recyclerview ophalen
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_beloningen_overzicht);
-
-        //Linear layout manager voor positionering van items in de recyclerview
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        //maak adapter
-        mAdapter = new AdapterBeloningenOverzicht(beloningenMedewerker, this);
-        //set adapter
-        mRecyclerView.setAdapter(mAdapter);
 
         this.setTitle("Mijn Beloningen");
 

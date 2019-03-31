@@ -88,7 +88,7 @@ public class AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHo
         BeloningWaardeCredit bwc = mDataset.get(position);
 
         viewHolder.tvCreditAantal.setText(Integer.toString(bwc.getCreditaantal()));
-        viewHolder.tvWaardeBeloning.setText(Double.toString(bwc.getWaarde()));
+        viewHolder.tvWaardeBeloning.setText(bwc.getWaarde());
         viewHolder.tvNaamBeloning.setText(bwc.getBeloningsnaam());
         Picasso.with(mContext).load(bwc.getFoto()).into(viewHolder.fotoBeloning);
 
