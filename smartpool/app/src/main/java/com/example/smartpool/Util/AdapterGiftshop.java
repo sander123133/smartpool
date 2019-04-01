@@ -17,7 +17,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHolder> {
+public class
+
+AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHolder> {
 
     private ArrayList<BeloningWaardeCredit> mDataset;
     private Context mContext;
