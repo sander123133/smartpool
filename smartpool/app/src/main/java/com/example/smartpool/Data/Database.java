@@ -235,7 +235,7 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE " + AUTOINFO_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + BEDRIJFRANG_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + BWC_TABEL_NAAM);
-        sqLiteDatabase.execSQL("DROP TABLE " + RITINFOGEREDEN_TABEL_NAAM);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "  + RITINFOGEREDEN_TABEL_NAAM);
 
         onCreate(sqLiteDatabase);
 
