@@ -28,32 +28,30 @@ import com.example.smartpool.R;
 import com.example.smartpool.Util.AdapterGiftshop;
 import com.example.smartpool.Util.AdapterRitoverzicht;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
 
 public class RitoverzichtFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    private Database db = new Database(this.getContext());
+    private Database db;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
+    private ArrayList<RitInfo> ritten;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        ArrayList<RitInfo> ritten = new ArrayList<>();
-        RitInfo ritInfo = new RitInfo("Breda", "Roosendaal", "21-03-2019", "08:00");
-        ritten.add(ritInfo);
+         db = new Database(this.getContext());
+         ritten = db.geefRitInfo();
 
-
-        //ArrayList<RitInfo> ritten = db.geefRitInfo();
-
-        View rootView = inflater.inflate(R.layout.fragment_rit_overzicht, container, false);
+         View rootView = inflater.inflate(R.layout.fragment_rit_overzicht, container, false);
 
         //referentie naar recyclerview ophalen
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rvAutoritten);
@@ -66,6 +64,7 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
         mAdapter = new AdapterRitoverzicht(ritten, this.getContext());
         //set adapter
         mRecyclerView.setAdapter(mAdapter);
+
 
         return rootView;
 
@@ -102,12 +101,24 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        return false;
+        ArrayList<RitInfo> aangepasteRitten = new ArrayList<>();
+        for(RitInfo rit : ritten){
+            if(rit.getOpstapplaats().equals(query)){
+                aangepasteRitten.add(rit);
+            }
+        }
+        mAdapter = new AdapterRitoverzicht(aangepasteRitten, getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return false;
+        if(newText.equals("")){
+            mAdapter = new AdapterRitoverzicht(ritten, getContext());
+            mRecyclerView.setAdapter(mAdapter);
+        }
+        return true;
     }
 }
 

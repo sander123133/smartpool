@@ -16,13 +16,15 @@ import com.example.smartpool.R;
 
 public class AddActivity extends AppCompatActivity {
 
-    private Database db = new Database(this);
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_main);
         final Button btnSave = findViewById(R.id.btnSave);
+
+        db = new Database(this);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
