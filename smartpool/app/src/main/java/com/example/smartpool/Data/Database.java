@@ -825,6 +825,17 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public boolean CheckOfAlAangemeldRit(int ritnummer, String gebruikersnaam, String datum) {
+        boolean isAlAangemelden = false;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String querry = "SELECT * FROM " + AANMELDING_TABEL_NAAM + " WHERE " +  " ritnummer = " + ritnummer + " AND gebruikersnaam = '" + gebruikersnaam + "' AND datum = '" + datum + "';";
+        Cursor cursor = sqLiteDatabase.rawQuery(querry, null);
+        if(cursor.getCount() >= 1)
+            isAlAangemelden = true;
+
+        return  isAlAangemelden;
+    }
+
 
 }
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smartpool.Data.Database;
 import com.example.smartpool.Domain.AutoInfo;
@@ -71,13 +72,25 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
 
 
         meldaanAlsBackupBtn.setOnClickListener(v -> {
-            database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.BACKUP_BESTUUDER,ritInfo.getRitnummer()));
+
+            if(!database.CheckOfAlAangemeldRit(ritInfo.getRitnummer(), gebruikersnaam, ritInfo.getDatum())) {
+                database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.MEERIJDER, ritInfo.getRitnummer()));
+            }
+            else {
+                Toast.makeText(this, "u bent al aangemelden", Toast.LENGTH_LONG);
+            }
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra("Gebruikersnaam", gebruikersnaam);
             startActivity(intent);
         });
         meldaanAlsMeerijder.setOnClickListener(v -> {
-            database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.MEERIJDER,ritInfo.getRitnummer()));
+
+            if(!database.CheckOfAlAangemeldRit(ritInfo.getRitnummer(), gebruikersnaam, ritInfo.getDatum())) {
+                database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.BACKUP_BESTUUDER, ritInfo.getRitnummer()));
+            }
+            else {
+                Toast.makeText(this, "u bent al aangemelden", Toast.LENGTH_LONG);
+            }
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra("Gebruikersnaam", gebruikersnaam);
             startActivity(intent);
