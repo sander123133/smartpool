@@ -63,19 +63,9 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
             Intent ritDetailIntent = new Intent(
                     view.getContext().getApplicationContext(),
                     RitinformatieActivity_detailview.class);
-
-            ritDetailIntent.putExtra("Ritinfo", mRitInfo);
-
-            view.getContext().startActivity(ritDetailIntent);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, RitinformatieActivity_detailview.class);
-                    intent.putExtra("Ritoverzicht", mDataset.get(position));
-                    mContext.startActivity(intent);
-                }
-            });
+            Intent intent = new Intent(mContext, RitinformatieActivity_detailview.class);
+            intent.putExtra("Ritoverzicht", mDataset.get(position));
+            mContext.startActivity(intent);
 
 
         }

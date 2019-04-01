@@ -33,7 +33,6 @@ public class BeloningOverzichtActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beloningen_overzicht);
 
-        ImageButton btnVerwijder = (ImageButton) findViewById(R.id.bo_btnVerwijderBeloning2);
 
         mDatabase = new Database(this);
 
@@ -56,22 +55,6 @@ public class BeloningOverzichtActivity extends AppCompatActivity {
         //set adapter
         mRecyclerView.setAdapter(mAdapter);
 
-        btnVerwijder.setOnClickListener(view -> {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(BeloningOverzichtActivity.this);
-            builder1.setMessage("Weet u zeker dat u deze beloning wilt verwijderen?");
-            builder1.setCancelable(true);
-
-            builder1.setPositiveButton(
-                    "Ja",
-                    (dialog, id) -> {
-
-                        //mDatabase.verwijderBeloning();
-                        dialog.cancel();
-                    });
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-
-        });
 
     }
 }
