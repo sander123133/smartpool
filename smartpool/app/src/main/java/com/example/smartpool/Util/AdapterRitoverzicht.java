@@ -22,10 +22,9 @@ import com.example.smartpool.R;
 
 import java.util.ArrayList;
 
-public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzicht.ViewHolder> implements Filterable {
+public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzicht.ViewHolder> {
 
     private ArrayList<RitInfo> mDataset;
-    private ArrayList<RitInfo> mDatasetFull;
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -66,14 +65,12 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
 
             view.getContext().startActivity(ritDetailIntent);
 
-
         }
     }
 
     //constructor voor adapter
     public AdapterRitoverzicht(ArrayList<RitInfo> mDataset, Context mContext){
         this.mDataset = mDataset;
-        mDatasetFull = new ArrayList<RitInfo>(mDataset);
         this.mContext = mContext;
     }
 
@@ -108,39 +105,5 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
         return size;
     }
 
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
 
-    private Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<RitInfo> filteredRitten = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-            filteredRitten.addAll(mDatasetFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (RitInfo item : mDatasetFull){
-                    if (item.getOpstapplaats().toLowerCase().contains(filterPattern)){
-                        filteredRitten.add(item);
-
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredRitten;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            mDataset.clear();
-            mDataset.addAll((ArrayList) results.values);
-            notifyDataSetChanged();
-        }
-    };
 }

@@ -30,7 +30,9 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "smartpoolDB";
 
+
     private static final int DB_V = 11;
+
 
 
     //tabel en kolomnamen
@@ -337,6 +339,7 @@ public class Database extends SQLiteOpenHelper {
             ri.setQrCode(res.getString(res.getColumnIndex(RITINFO_KOLOM_QRCODE)));
             ri.setRitnummer(res.getInt(res.getColumnIndex(RITINFO_KOLOM_RITNUMMER)));
 
+
             ritInfoArrayList.add(ri);
             res.moveToNext();
         }
@@ -417,7 +420,11 @@ public class Database extends SQLiteOpenHelper {
         return true;
     }
 
-    public void createTestData() {
+
+
+
+        public void createTestData(){
+
 
         Log.d(TAG, "createTestData: Called");
 
