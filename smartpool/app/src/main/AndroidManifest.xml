@@ -26,7 +26,9 @@
         <activity android:name=".Controller.Register"/>
         <activity android:name=".Controller.RitinformatieActivity_detailview"/>
 
-        `<activity android:name=".Controller.MainActivity"/>
+        <activity android:name=".Controller.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".Controller.QRGeneratorActivity"/>
         <activity android:name=".Controller.AangemeldeRittenAcitivity"/>
 

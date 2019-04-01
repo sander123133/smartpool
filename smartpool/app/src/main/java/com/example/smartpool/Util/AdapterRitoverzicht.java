@@ -53,8 +53,6 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
 
         }
 
-
-
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
@@ -63,9 +61,10 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
             Intent ritDetailIntent = new Intent(
                     view.getContext().getApplicationContext(),
                     RitinformatieActivity_detailview.class);
-            Intent intent = new Intent(mContext, RitinformatieActivity_detailview.class);
-            intent.putExtra("Ritoverzicht", mDataset.get(position));
-            mContext.startActivity(intent);
+
+            ritDetailIntent.putExtra("Ritinfo", mRitInfo);
+
+            view.getContext().startActivity(ritDetailIntent);
 
 
         }

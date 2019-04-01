@@ -27,6 +27,7 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
         android:text="Naam beloning "
+        android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +43,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:text="Waarde"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.023"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,13 +54,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:text="Kortingscode"
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.025"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/bo_txtKortingscode"
         app:layout_constraintTop_toBottomOf="@+id/bo_waarde" />
 
     <TextView
@@ -70,6 +73,7 @@
         android:layout_marginEnd="8dp"
         android:clickable="true"
         android:text="Download e-ticket"
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -85,9 +89,10 @@
         android:layout_marginEnd="8dp"
         android:clickable="true"
         android:text="Verwijder beloning "
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bo_btnVerwijderBeloning"
+        app:layout_constraintStart_toEndOf="@+id/bo_btnVerwijderBeloning2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -122,8 +127,8 @@
 
     <ImageButton
         android:id="@+id/bo_btnDownloadTicket"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -136,12 +141,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bo_kortingscode"
-        app:layout_constraintVertical_bias="0.692" />
+        app:layout_constraintVertical_bias="0.736" />
 
     <ImageButton
         android:id="@+id/bo_btnVerwijderBeloning2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -155,5 +160,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bo_kortingscode"
         app:layout_constraintVertical_bias="0.692" />
+
+    <TextView
+        android:id="@+id/bo_txtKortingscode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Kortingscode:"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/bo_downloadTicket"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bo_waarde" />
 
 </android.support.constraint.ConstraintLayout>

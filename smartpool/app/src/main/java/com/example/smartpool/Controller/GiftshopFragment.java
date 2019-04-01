@@ -1,6 +1,6 @@
 package com.example.smartpool.Controller;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,15 +28,17 @@ public class GiftshopFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private Database mDatabase;
     private Medewerkerinfo medewerkerinfo;
-
+    private String gebruikersnaamIngelogd;
     private TextView tvCreditBesteedbaar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        gebruikersnaamIngelogd = getArguments().getString("GebruikersnaamIngelogd");
+
         mDatabase = new Database(this.getContext());
-        medewerkerinfo = mDatabase.geefMedewerker("IngevZetten");
+        medewerkerinfo = mDatabase.geefMedewerker(gebruikersnaamIngelogd);
 
         Log.d("GiftshopFragment", "medewerker ingelogd:" + medewerkerinfo.getGebruikersnaam());
 
@@ -54,7 +56,7 @@ public class GiftshopFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //maak adapter
-        mAdapter = new AdapterGiftshop(beloningen, this.getContext());
+        mAdapter = new AdapterGiftshop(beloningen, this.getContext(), gebruikersnaamIngelogd);
         //set adapter
         mRecyclerView.setAdapter(mAdapter);
 
@@ -69,7 +71,7 @@ public class GiftshopFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        medewerkerinfo = mDatabase.geefMedewerker("IngevZetten");
+        medewerkerinfo = mDatabase.geefMedewerker(gebruikersnaamIngelogd);
         tvCreditBesteedbaar.setText(Integer.toString(medewerkerinfo.getCreditaantal()));
     }
 }
