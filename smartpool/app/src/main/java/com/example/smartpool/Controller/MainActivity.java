@@ -133,17 +133,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_mijnritten:
                 intent = new Intent(this, AangemeldeRittenAcitivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_uitloggen:
                 intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_mijnbeloningen:
                 intent = new Intent(this, BeloningOverzichtActivity.class);
-                intent.putExtra("GebruikerIngelogd", gebruikersnaam);
+                intent.putExtra("Gebruikersnaam", gebruikersnaam);
                 break;
         }
 
-        startActivity(intent);
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

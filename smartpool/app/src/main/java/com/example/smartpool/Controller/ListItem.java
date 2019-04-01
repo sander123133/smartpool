@@ -33,7 +33,7 @@ public class ListItem extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        db = new Database(this.getContext());
+        /*db = new Database(this.getContext());
         ArrayList<BedrijfRang> bedrijfRangs = db.geefBedrijven();
 
         View rootView = inflater.inflate(R.layout.list_item, container, false);
@@ -50,8 +50,8 @@ public class ListItem extends Fragment {
         mAdapter = new AdapterRang(bedrijfRangs, this.getContext());
 
         mRecyclerView.setAdapter(mAdapter);
-
-        return rootView;
+        */
+        return inflater.inflate(R.layout.activity_rang, container, false);
 
     }
 

@@ -32,7 +32,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String DB_NAME = "smartpoolDB";
 
 
-    private static final int DB_V = 13;
+    private static final int DB_V = 16;
 
 
 
@@ -640,7 +640,7 @@ public class Database extends SQLiteOpenHelper {
             switch (cursor.getString(cursor.getColumnIndex(AANMELDING_KOLOM_CARPOOLCATEGORIE))) {
                 case "bestuuder":
                     ritAanmelding.setCarpoolcategorie(Carpoolcategorie.BESTUUDER);
-                case "back up":
+                case "Back up":
                     ritAanmelding.setCarpoolcategorie(Carpoolcategorie.BACKUP_BESTUUDER);
                 case "meerijder":
                     ritAanmelding.setCarpoolcategorie(Carpoolcategorie.MEERIJDER);
@@ -684,7 +684,7 @@ public class Database extends SQLiteOpenHelper {
             case "bestuuder":
                 carpoolcategorie = Carpoolcategorie.BESTUUDER;
                 break;
-            case "back up":
+            case "Back up":
                 carpoolcategorie = Carpoolcategorie.BACKUP_BESTUUDER;
                 break;
             case "meerijder":

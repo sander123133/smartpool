@@ -26,6 +26,7 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
 
     private ArrayList<RitInfo> mDataset;
     private Context mContext;
+    private String gebruikersnaam;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -62,16 +63,17 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
                     RitinformatieActivity_detailview.class);
 
             ritDetailIntent.putExtra("RitInfo", mRitInfo);
-
+            ritDetailIntent.putExtra("Gebruikersnaam", gebruikersnaam);
             view.getContext().startActivity(ritDetailIntent);
 
         }
     }
 
     //constructor voor adapter
-    public AdapterRitoverzicht(ArrayList<RitInfo> mDataset, Context mContext){
+    public AdapterRitoverzicht(ArrayList<RitInfo> mDataset, Context mContext, String gebruikersnaam){
         this.mDataset = mDataset;
         this.mContext = mContext;
+        this.gebruikersnaam = gebruikersnaam;
     }
 
     //Nieuwe views maken (invoked by the layout manager)

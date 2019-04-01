@@ -64,7 +64,7 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
 
 
         //maak adapter
-        mAdapter = new AdapterRitoverzicht(ritten, this.getContext());
+        mAdapter = new AdapterRitoverzicht(ritten, this.getContext(), gebruikersnaam);
         //set adapter
         mRecyclerView.setAdapter(mAdapter);
 
@@ -110,7 +110,7 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
                 aangepasteRitten.add(rit);
             }
         }
-        mAdapter = new AdapterRitoverzicht(aangepasteRitten, getContext());
+        mAdapter = new AdapterRitoverzicht(aangepasteRitten, getContext(), gebruikersnaam);
         mRecyclerView.setAdapter(mAdapter);
         return true;
     }
@@ -118,7 +118,7 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
     @Override
     public boolean onQueryTextChange(String newText) {
         if(newText.equals("")){
-            mAdapter = new AdapterRitoverzicht(ritten, getContext());
+            mAdapter = new AdapterRitoverzicht(ritten, getContext(), gebruikersnaam);
             mRecyclerView.setAdapter(mAdapter);
         }
         return true;

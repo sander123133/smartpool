@@ -59,7 +59,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         gebruikersListview.setAdapter(new Detailview_ArrayAdapter(this, R.layout.listview_adpater_ritinformatie_detaivliew, medewerkerinfos, database));
         Utility.setListViewHeightBasedOnChildren(gebruikersListview);
 
-        Button meldaanAlsBackupBtn = findViewById(R.id.detail_ritinformatieActivity_meldaanAlsmeerijder_btn);
+        Button meldaanAlsBackupBtn = findViewById(R.id.detail_ritinformatieActivity_aanmeldAlsBackUp_btn);
         Button meldaanAlsMeerijder = findViewById(R.id.detail_ritinformatieActivity_meldaanAlsmeerijder_btn);
         Button ritVoltooidBtn = findViewById(R.id.detail_rtinformatieActivity_ritvoltooid_btn);
 
@@ -73,11 +73,13 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         meldaanAlsBackupBtn.setOnClickListener(v -> {
             database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.BACKUP_BESTUUDER,ritInfo.getRitnummer()));
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("Gebruikersnaam", gebruikersnaam);
             startActivity(intent);
         });
         meldaanAlsMeerijder.setOnClickListener(v -> {
             database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.MEERIJDER,ritInfo.getRitnummer()));
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("Gebruikersnaam", gebruikersnaam);
             startActivity(intent);
         });
 
