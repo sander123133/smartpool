@@ -10,4 +10,7 @@ public class RangActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rang);
     }
+
+
+
 }

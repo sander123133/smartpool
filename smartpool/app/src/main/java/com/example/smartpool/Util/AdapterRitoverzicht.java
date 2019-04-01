@@ -30,10 +30,10 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        //view (list_row_item) die de items bevat die in de listview moeten komen
+
         public View view;
 
-        //view items die de list_row_item bevat
+
         public TextView tvDatum;
         public TextView tvTijd;
         public TextView tvOpstap;
