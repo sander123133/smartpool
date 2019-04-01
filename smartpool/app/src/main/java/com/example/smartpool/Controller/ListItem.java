@@ -34,12 +34,12 @@ public class ListItem extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         db = new Database(this.getContext());
-        ArrayList<BedrijfRang> bedrijfRangs = db.geefMedewerker();
+        ArrayList<BedrijfRang> bedrijfRangs = db.geefBedrijven();
 
         View rootView = inflater.inflate(R.layout.list_item, container, false);
 
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.r);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rvRang);
 
 
         mLayoutManager = new LinearLayoutManager(getActivity());

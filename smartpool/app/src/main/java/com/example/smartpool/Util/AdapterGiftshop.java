@@ -59,7 +59,7 @@ AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHolder> {
                     GifsthopDetailActivity.class);
 
             giftshopDetailIntent.putExtra("Beloning", mBeloning);
-            giftshopDetailIntent.putExtra("GebruikersnaamIngelogd", gebruikersnaam);
+            giftshopDetailIntent.putExtra("Gebruikersnaam", gebruikersnaam);
 
             view.getContext().startActivity(giftshopDetailIntent);
         }

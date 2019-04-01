@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smartpool.Data.Database;
 
@@ -47,18 +48,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (item.getItemId()) {
                 case R.id.nav_giftshop:
                     Bundle gebruikerIngelogd = new Bundle();
-                    gebruikerIngelogd.putString("GebruikersnaamIngelogd", gebruikersnaam);
+                    gebruikerIngelogd.putString("Gebruikersnaam", gebruikersnaam);
                     GiftshopFragment giftshopFragment = new GiftshopFragment();
                     giftshopFragment.setArguments(gebruikerIngelogd);
                     manager.beginTransaction().replace(R.id.fragment_container, giftshopFragment).commit();
                     getSupportActionBar().setTitle("Giftshop");
                     break;
                 case R.id.nav_ranglijst:
-                    manager.beginTransaction().replace(R.id.fragment_container, new RitoverzichtFragment()).commit();
+                    manager.beginTransaction().replace(R.id.fragment_container, new ListItem()).commit();
                     getSupportActionBar().setTitle("Ranglijst");
                     break;
                 case R.id.nav_ritten:
-                    manager.beginTransaction().replace(R.id.fragment_container, new RitoverzichtFragment()).commit();
+                    Bundle gebruikerIngelogdAddactivity = new Bundle();
+                    gebruikerIngelogdAddactivity.putString("Gebruikersnaam", gebruikersnaam);
+                    RitoverzichtFragment ritoverzichtFragment= new RitoverzichtFragment();
+                    ritoverzichtFragment.setArguments(gebruikerIngelogdAddactivity);
+                    manager.beginTransaction().replace(R.id.fragment_container, ritoverzichtFragment).commit();
                     getSupportActionBar().setTitle("Ritten");
                     break;
             }
@@ -73,9 +78,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.main_activity_container);
 
         Bundle extras = getIntent().getExtras();
-        gebruikersnaam = extras.getString("Gebruikersnaam");
-        db.updateCreditTeBesteden(50, gebruikersnaam);
 
+        gebruikersnaam = extras.getString("Gebruikersnaam");
         Medewerkerinfo gebrIngelogd = db.geefMedewerker(gebruikersnaam);
 
 
@@ -103,7 +107,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RitoverzichtFragment()).commit();
+        Bundle gebruikerIngelogdAddactivity = new Bundle();
+        gebruikerIngelogdAddactivity.putString("Gebruikersnaam", gebruikersnaam);
+        RitoverzichtFragment ritoverzichtFragment= new RitoverzichtFragment();
+        ritoverzichtFragment.setArguments(gebruikerIngelogdAddactivity);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ritoverzichtFragment).commit();
         getSupportActionBar().setTitle("Ritten");
 
     }
@@ -121,10 +129,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_profiel:
-
+                Toast.makeText(this,"oof", Toast.LENGTH_SHORT);
                 break;
             case R.id.nav_mijnritten:
-
+                intent = new Intent(this, AangemeldeRittenAcitivity.class);
                 break;
             case R.id.nav_uitloggen:
                 intent = new Intent(this, LoginActivity.class);

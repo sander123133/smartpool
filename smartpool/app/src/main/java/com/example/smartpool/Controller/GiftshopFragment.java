@@ -35,7 +35,7 @@ public class GiftshopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        gebruikersnaamIngelogd = getArguments().getString("GebruikersnaamIngelogd");
+        gebruikersnaamIngelogd = getArguments().getString("Gebruikersnaam");
 
         mDatabase = new Database(this.getContext());
         medewerkerinfo = mDatabase.geefMedewerker(gebruikersnaamIngelogd);

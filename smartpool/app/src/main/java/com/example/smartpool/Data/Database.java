@@ -7,6 +7,7 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.nfc.Tag;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 import android.util.Log;
 
 
@@ -31,7 +32,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String DB_NAME = "smartpoolDB";
 
 
-    private static final int DB_V = 11;
+    private static final int DB_V = 13;
 
 
 
@@ -69,13 +70,11 @@ public class Database extends SQLiteOpenHelper {
     private static final String BEDRIJFRANG_TABEL_NAAM = "BedrijfRang";
     private static final String BEDRIJFRANG_KOLOM_BEDRIJFSNAAM = "Bedrijfsnaam";
     private static final String BEDRIJFRANG_KOLOM_CREDITAANTAL = "Creditaantal";
-    private static final String BEDRIJFRANG_KOLOM_PLAATS = "Plaats";
 
     //tabel MedewerkerRang
     private static final String MEDEWERKERRANG_TABEL_NAAM = "MedewerkerRang";
     private static final String MEDEWERKERRANG_KOLOM_GEBRUIKERSNAAM = "Gebruikersnaam";
     private static final String MEDEWERKERRANG_KOLOM_TOTAALCREDITS = "TotaalCredits";
-    private static final String MEDEWERKERRANG_KOLOM_PLAATS = "Plaats";
 
     //tabel RitInformatie
     private static final String RITINFO_TABEL_NAAM = "RitInformatie";
@@ -88,7 +87,6 @@ public class Database extends SQLiteOpenHelper {
     private static final String RITINFO_KOLOM_TIJD_TERUGRIJDEN = "Tijdterugrijden";
     private static final String RITINFO_KOLOM_STATUS = "Status";
     private static final String RITINFO_KOLOM_KENTEKEN = "Kenteken";
-    private static final String RITINFO_KOLOM_QRCODE = "qrcode";
     private static final String RITINFO_KOLOM_RITNUMMER = "ritnummer";
 
     //tabel RitInformatieGeredenRit
@@ -102,7 +100,6 @@ public class Database extends SQLiteOpenHelper {
     private static final String RITINFOGEREDEN_KOLOM_TIJD_TERUGRIJDEN = "Tijdterugrijden";
     private static final String RITINFOGEREDEN_KOLOM_STATUS = "Status";
     private static final String RITINFOGEREDEN_KOLOM_KENTEKEN = "Kenteken";
-    private static final String RITINFOGEREDEN_KOLOM_QRCODE = "qrcode";
 
     //tabel AanmeldingRit
     private static final String AANMELDING_TABEL_NAAM = "AanmeldingRit";
@@ -111,18 +108,6 @@ public class Database extends SQLiteOpenHelper {
     private static final String AANMELDING_KOLOM_CARPOOLCATEGORIE = "Carpoolcategorie";
     private static final String AANMELDING_KOLOM_RITID = "ritnummer";
 
-    //tabel CarpoolCategorieCredits
-    private static final String CARPOOOLCATCREDITS_TABEL_NAAM = "CarpoolCategorieCredits";
-    private static final String CARPOOLCATCREDITS_KOLOM_CARPOOLCAT = "Carpoolcategorie";
-    private static final String CARPOOLCATCREDITS_KOLOM_CREDITAANTAL = "Creditaantal";
-
-    //tabel Statusnaam
-    private static final String STATUSNAAM_TABEL_NAAM = "Statusnaam";
-    private static final String STATUSNAAM_KOLOM_STATUSNAAM = "Statusnaam";
-
-    //tabel qr-code
-    private static final String QRCODE_TABEL_NAAM = "QRcode";
-    private static final String QRCODE_KOLOM_QRCODE = "qrcode";
 
     //tabel MedewerkerAutoInfo
     private static final String AUTOINFO_TABEL_NAAM = "MedewerkerAutoInfo";
@@ -139,7 +124,7 @@ public class Database extends SQLiteOpenHelper {
     //tabellen aanmaken
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON");
         //tabel BeloningWaardeCredit
         sqLiteDatabase.execSQL("CREATE TABLE '" + BWC_TABEL_NAAM + "' ( `" +
                 BWC_KOLOM_BELONINGSNAAM + "` TEXT, `" +
@@ -154,7 +139,6 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE " + BEDRIJFRANG_TABEL_NAAM + "(" +
                 BEDRIJFRANG_KOLOM_BEDRIJFSNAAM + " TEXT, " +
                 BEDRIJFRANG_KOLOM_CREDITAANTAL + " INTEGER, " +
-                BEDRIJFRANG_KOLOM_PLAATS + " INTEGER, " +
                 "PRIMARY KEY(" + BEDRIJFRANG_KOLOM_BEDRIJFSNAAM + "))");
 
         //tabel medewerkerinfo
@@ -189,27 +173,9 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE " + MEDEWERKERRANG_TABEL_NAAM + "(" +
                 MEDEWERKERRANG_KOLOM_GEBRUIKERSNAAM + " TEXT, " +
                 MEDEWERKERRANG_KOLOM_TOTAALCREDITS + " INTEGER, " +
-                MEDEWERKERRANG_KOLOM_PLAATS + " INTEGER, " +
                 "PRIMARY KEY(`" + MEDEWERKERRANG_KOLOM_GEBRUIKERSNAAM + "`)," +
                 "FOREIGN KEY(" + MEDEWERKERRANG_KOLOM_GEBRUIKERSNAAM + ")" +
                 "REFERENCES " + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + "(" + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + ") )");
-
-        //tabel CarpoolCategorie
-        sqLiteDatabase.execSQL("CREATE TABLE " + CARPOOOLCATCREDITS_TABEL_NAAM + "(" +
-                CARPOOLCATCREDITS_KOLOM_CARPOOLCAT + " TEXT, " +
-                CARPOOLCATCREDITS_KOLOM_CREDITAANTAL + " INTEGER NOT NULL, " +
-                "PRIMARY KEY(" + CARPOOLCATCREDITS_KOLOM_CARPOOLCAT + "))");
-
-        //tabel Statusnaam
-        sqLiteDatabase.execSQL("CREATE TABLE " + STATUSNAAM_TABEL_NAAM + "(" +
-                STATUSNAAM_KOLOM_STATUSNAAM + " TEXT, " +
-                "PRIMARY KEY(" + STATUSNAAM_KOLOM_STATUSNAAM + "))");
-
-        //tabel QRcode
-        sqLiteDatabase.execSQL("CREATE TABLE " + QRCODE_TABEL_NAAM + "(" +
-                QRCODE_KOLOM_QRCODE + " TEXT, " +
-                "PRIMARY KEY(" + QRCODE_KOLOM_QRCODE + "))");
-
         //tabel MedewerkerAutoInfo
         sqLiteDatabase.execSQL("CREATE TABLE " + AUTOINFO_TABEL_NAAM + "(" +
                 AUTOINFO_KOLOM_KENTEKEN + " TEXT, " +
@@ -228,16 +194,11 @@ public class Database extends SQLiteOpenHelper {
                 RITINFO_KOLOM_TIJD_TERUGRIJDEN + " TEXT NOT NULL, " +
                 RITINFO_KOLOM_STATUS + " TEXT NOT NULL, " +
                 RITINFO_KOLOM_KENTEKEN + " TEXT NOT NULL, " +
-                RITINFO_KOLOM_QRCODE + " TEXT NOT NULL, " +
                 RITINFO_KOLOM_RITNUMMER + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "FOREIGN KEY(" + RITINFO_KOLOM_GEBRUIKERSNAAM + ")" +
                 "REFERENCES " + MEDEWERKER_TABEL_NAAM + "(" + MEDEWERKER_KOLOM_GEBRUIKERSNAAM + ")," +
-                "FOREIGN KEY(" + RITINFO_KOLOM_STATUS + ")" +
-                "REFERENCES " + STATUSNAAM_TABEL_NAAM + "(" + STATUSNAAM_KOLOM_STATUSNAAM + ")," +
                 "FOREIGN KEY(" + RITINFO_KOLOM_KENTEKEN + ")" +
                 "REFERENCES " + AUTOINFO_TABEL_NAAM + "(" + AUTOINFO_KOLOM_KENTEKEN + ")," +
-                "FOREIGN KEY(" + RITINFO_KOLOM_QRCODE + ")" +
-                "REFERENCES " + QRCODE_TABEL_NAAM + "(" + QRCODE_KOLOM_QRCODE + ")," +
                 "UNIQUE(" + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_GEBRUIKERSNAAM + ") )");
 
 //tabel AanmeldingRit
@@ -247,8 +208,6 @@ public class Database extends SQLiteOpenHelper {
                 AANMELDING_KOLOM_GEBRUIKERSNAAM + " TEXT, " +
                 AANMELDING_KOLOM_RITID + " INTEGER," +
                 "PRIMARY KEY(" + AANMELDING_KOLOM_DATUM + ", " + AANMELDING_KOLOM_GEBRUIKERSNAAM + ", " + AANMELDING_KOLOM_CARPOOLCATEGORIE + ")," +
-                "FOREIGN KEY(" + AANMELDING_KOLOM_CARPOOLCATEGORIE + ")" +
-                "REFERENCES " + CARPOOOLCATCREDITS_TABEL_NAAM + "(" + CARPOOLCATCREDITS_KOLOM_CARPOOLCAT + ")," +
                 "FOREIGN KEY(" + AANMELDING_KOLOM_GEBRUIKERSNAAM + ", " + AANMELDING_KOLOM_DATUM + ", " + AANMELDING_KOLOM_RITID + ") " +
                 "REFERENCES " + RITINFO_TABEL_NAAM + "(" + RITINFO_KOLOM_GEBRUIKERSNAAM + ", " + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_RITNUMMER + ") )");
 
@@ -261,8 +220,7 @@ public class Database extends SQLiteOpenHelper {
                 RITINFOGEREDEN_KOLOM_OPEN_PLAATSEN + " INTEGER NOT NULL, " +
                 RITINFOGEREDEN_KOLOM_TIJD_TERUGRIJDEN + " TEXT NOT NULL, " +
                 RITINFOGEREDEN_KOLOM_STATUS + " TEXT NOT NULL, " +
-                RITINFOGEREDEN_KOLOM_KENTEKEN + " TEXT NOT NULL, " +
-                RITINFOGEREDEN_KOLOM_QRCODE + " TEXT NOT NULL " + ");");
+                RITINFOGEREDEN_KOLOM_KENTEKEN + " TEXT NOT NULL " + ");");
 
     }
 
@@ -274,9 +232,6 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE " + RITINFO_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + AANMELDING_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + MEDEWERKERRANG_TABEL_NAAM);
-        sqLiteDatabase.execSQL("DROP TABLE " + CARPOOOLCATCREDITS_TABEL_NAAM);
-        sqLiteDatabase.execSQL("DROP TABLE " + STATUSNAAM_TABEL_NAAM);
-        sqLiteDatabase.execSQL("DROP TABLE " + QRCODE_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + AUTOINFO_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + BEDRIJFRANG_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + BWC_TABEL_NAAM);
@@ -336,7 +291,6 @@ public class Database extends SQLiteOpenHelper {
             ri.setGebruikersnaam(res.getString(res.getColumnIndex(RITINFO_KOLOM_GEBRUIKERSNAAM)));
             ri.setStatus(res.getString(res.getColumnIndex(RITINFO_KOLOM_STATUS)));
             ri.setKenteken(res.getString(res.getColumnIndex(RITINFO_KOLOM_KENTEKEN)));
-            ri.setQrCode(res.getString(res.getColumnIndex(RITINFO_KOLOM_QRCODE)));
             ri.setRitnummer(res.getInt(res.getColumnIndex(RITINFO_KOLOM_RITNUMMER)));
 
 
@@ -405,7 +359,6 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(RITINFO_KOLOM_KENTEKEN, ritInfo.getKenteken());
         contentValues.put(RITINFO_KOLOM_OPEN_PLAATSEN, ritInfo.getVrijePlaatsen());
         contentValues.put(RITINFO_KOLOM_OPSTAPPLAATS, ritInfo.getOpstapplaats());
-        contentValues.put(RITINFO_KOLOM_QRCODE, ritInfo.getQrCode());
         contentValues.put(RITINFO_KOLOM_STARTTIJD, ritInfo.getTijdHeen());
         contentValues.put(RITINFO_KOLOM_STATUS, ritInfo.getStatus());
         contentValues.put(RITINFO_KOLOM_TIJD_TERUGRIJDEN, ritInfo.getTijdTerug());
@@ -617,7 +570,6 @@ public class Database extends SQLiteOpenHelper {
 
         contentValues.put(BEDRIJFRANG_KOLOM_BEDRIJFSNAAM, bedrijfRang.getBedrijfsnaam());
         contentValues.put(BEDRIJFRANG_KOLOM_CREDITAANTAL, bedrijfRang.getCreditaantal());
-        contentValues.put(BEDRIJFRANG_KOLOM_PLAATS, bedrijfRang.getPlaats());
 
 
         Log.d(TAG, "insert bedrijf: " + bedrijfRang.getBedrijfsnaam());
@@ -827,7 +779,6 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(RITINFOGEREDEN_KOLOM_KENTEKEN, ritInfo.getKenteken());
         contentValues.put(RITINFOGEREDEN_KOLOM_OPEN_PLAATSEN, ritInfo.getVrijePlaatsen());
         contentValues.put(RITINFOGEREDEN_KOLOM_OPSTAPPLAATS, ritInfo.getOpstapplaats());
-        contentValues.put(RITINFOGEREDEN_KOLOM_QRCODE, ritInfo.getQrCode());
         contentValues.put(RITINFOGEREDEN_KOLOM_STARTTIJD, ritInfo.getTijdHeen());
         contentValues.put(RITINFOGEREDEN_KOLOM_STATUS, ritInfo.getStatus());
         contentValues.put(RITINFOGEREDEN_KOLOM_TIJD_TERUGRIJDEN, ritInfo.getTijdTerug());
@@ -845,6 +796,33 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(querry);
         querry = "DELETE FROM " + RITINFO_TABEL_NAAM + " WHERE ritnummer = " + id + ";";
         sqLiteDatabase.execSQL(querry);
+    }
+
+    public ArrayList<BedrijfRang> geefBedrijven(){
+        ArrayList<BedrijfRang> bedrijven = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String querry = "SELECT * FROM " + BEDRIJFRANG_TABEL_NAAM;
+        Cursor cursor = sqLiteDatabase.rawQuery(querry, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+         BedrijfRang bedrijfRang = new BedrijfRang(cursor.getString(cursor.getColumnIndex(BEDRIJFRANG_KOLOM_BEDRIJFSNAAM)), 0);
+         bedrijven.add(bedrijfRang);
+        }
+
+        return bedrijven;
+    }
+
+    public int geefRitInfoOpbasisVanGebruikersnaamEnDatum(String gebruikersnaam, String datum){
+        int ritnummer = 0;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String querry = "SELECT ritnummer FROM "+ RITINFO_TABEL_NAAM + " WHERE " + "Gebruikersnaam = '" + gebruikersnaam
+                + "' AND Datum = '" + datum + "';";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(querry, null);
+        cursor.moveToFirst();
+        ritnummer = cursor.getInt(cursor.getColumnIndex(RITINFO_KOLOM_RITNUMMER));
+        return  ritnummer;
+
     }
 
 

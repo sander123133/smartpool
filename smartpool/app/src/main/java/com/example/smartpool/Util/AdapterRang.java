@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class AdapterRang extends RecyclerView.Adapter<AdapterRang.ViewHolder> implements Filterable {
 
     private ArrayList<BedrijfRang> mDataset;
-    private ArrayList<BedrijfRang> mDatasetFull;
     private Context mContext;
 
     @Override
@@ -53,24 +52,12 @@ public class AdapterRang extends RecyclerView.Adapter<AdapterRang.ViewHolder> im
         }
 
 
-
-
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            BedrijfRang mBedrijfRang = mDataset.get(position);
-
-
-
-            };
-
-
         }
 
 
 
     public AdapterRang(ArrayList<BedrijfRang> mDataset, Context mContext){
         this.mDataset = mDataset;
-        mDatasetFull = new ArrayList<BedrijfRang>(mDataset);
         this.mContext = mContext;
     }
 

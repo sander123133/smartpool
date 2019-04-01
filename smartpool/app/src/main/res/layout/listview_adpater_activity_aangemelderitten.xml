@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="704dp"
-        android:text="Aangemeld als:"
+        android:text="Aangemeld als: "
         android:textColor="@android:color/holo_green_light"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

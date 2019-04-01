@@ -6,12 +6,10 @@ public class BedrijfRang implements Serializable {
 
     private String bedrijfsnaam;
     private int creditaantal;
-    private int plaats;
 
-    public BedrijfRang(String bedrijfsnaam, int creditaantal, int plaats) {
+    public BedrijfRang(String bedrijfsnaam, int creditaantal) {
         this.bedrijfsnaam = bedrijfsnaam;
         this.creditaantal = creditaantal;
-        this.plaats = plaats;
     }
 
     public BedrijfRang() {
@@ -33,11 +31,4 @@ public class BedrijfRang implements Serializable {
         this.creditaantal = creditaantal;
     }
 
-    public int getPlaats() {
-        return plaats;
-    }
-
-    public void setPlaats(int plaats) {
-        this.plaats = plaats;
-    }
 }

@@ -43,6 +43,7 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     private ArrayList<RitInfo> ritten;
+    private String gebruikersnaam;
 
     @Nullable
     @Override
@@ -50,7 +51,7 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
 
          db = new Database(this.getContext());
          ritten = db.geefRitInfo();
-
+         gebruikersnaam = getArguments().getString("Gebruikersnaam");
 
          View rootView = inflater.inflate(R.layout.fragment_rit_overzicht, container, false);
 
@@ -83,6 +84,7 @@ public class RitoverzichtFragment extends Fragment implements SearchView.OnQuery
         fabToevoegen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent go = new Intent(getContext(), AddActivity.class);
+                go.putExtra("Gebruikersnaam", gebruikersnaam);
                 startActivity(go);
 
             }

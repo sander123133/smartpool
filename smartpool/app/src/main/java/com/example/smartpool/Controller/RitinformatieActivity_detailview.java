@@ -40,8 +40,8 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         TextView naamTxt = findViewById(R.id.detail_ritinformatieActivity_autoInput_txt);
 
        Bundle extras = getIntent().getExtras();
-       RitInfo ritInfo = (RitInfo) extras.getSerializable("Ritoverzicht");
-       String gebruikersnaam = "rogier";
+       RitInfo ritInfo = (RitInfo) extras.getSerializable("RitInfo");
+       String gebruikersnaam = extras.getString("Gebruikersnaam");
        beginTijdTxt.setText(ritInfo.getTijdHeen());
        datumTxt.setText(ritInfo.getDatum());
        opstapplaatsTxt.setText(ritInfo.getOpstapplaats());

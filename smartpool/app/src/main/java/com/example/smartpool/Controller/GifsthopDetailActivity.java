@@ -38,7 +38,7 @@ public class GifsthopDetailActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final BeloningWaardeCredit bwc = (BeloningWaardeCredit) extras.getSerializable("Beloning");
-        String gebruikersnaamIngelogd = extras.getString("GebruikersnaamIngelogd");
+        String gebruikersnaamIngelogd = extras.getString("Gebruikersnaam");
 
         Log.d("Giftshopdetail", "gebruikersnaam ingelogd: " + gebruikersnaamIngelogd);
 

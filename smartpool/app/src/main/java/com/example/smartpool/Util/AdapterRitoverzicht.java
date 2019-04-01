@@ -61,7 +61,7 @@ public class AdapterRitoverzicht extends RecyclerView.Adapter<AdapterRitoverzich
                     view.getContext().getApplicationContext(),
                     RitinformatieActivity_detailview.class);
 
-            ritDetailIntent.putExtra("Ritinfo", mRitInfo);
+            ritDetailIntent.putExtra("RitInfo", mRitInfo);
 
             view.getContext().startActivity(ritDetailIntent);
 
