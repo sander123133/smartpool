@@ -21,6 +21,11 @@ import com.example.smartpool.Util.AdapterGiftshop;
 
 import java.util.ArrayList;
 
+/**
+ * Deze klasse zorgt ervoor dat alle beloningen uit de giftshop zichtbaar worden op het scherm.
+ * @see AdapterGiftshop
+ * @author Inge
+ */
 public class GiftshopFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
@@ -35,6 +40,7 @@ public class GiftshopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //Haal de gebruikersnaam van de ingelogde gebruiker op om te besteden credits op te halen.
         gebruikersnaamIngelogd = getArguments().getString("Gebruikersnaam");
 
         mDatabase = new Database(this.getContext());
@@ -60,6 +66,7 @@ public class GiftshopFragment extends Fragment {
         //set adapter
         mRecyclerView.setAdapter(mAdapter);
 
+        //Zet de credits die de gebruiker te besteden heeft in het daarvoor bedoelde tekstvak op het scherm
         tvCreditBesteedbaar =  rootView.findViewById(R.id.tv_creditaantal_besteden);
         tvCreditBesteedbaar.setText(Integer.toString(medewerkerinfo.getCreditaantal()));
 
@@ -67,6 +74,11 @@ public class GiftshopFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Zorgt ervoor dat het creditaantal in het tekstvak veranderd wordt nadat een aankoop is gedaan in
+     * GiftshopDetailActivity.
+     * @see GifsthopDetailActivity
+     */
     @Override
     public void onResume() {
         super.onResume();

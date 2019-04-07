@@ -25,6 +25,10 @@ import com.example.smartpool.Domain.RitInfo;
 
 import java.util.ArrayList;
 
+/**
+ * Deze klasse zorgt voor het aanmaken van de SQLite database en het versturen van opdrachten naar de database.
+ * Iedere sql opdracht naar de database heeft zijn eigen methode in deze klasse.
+ */
 public class Database extends SQLiteOpenHelper {
 
     private final String TAG = getClass().getSimpleName();
@@ -33,7 +37,6 @@ public class Database extends SQLiteOpenHelper {
 
 
     private static final int DB_V = 16;
-
 
 
     //tabel en kolomnamen
@@ -121,7 +124,11 @@ public class Database extends SQLiteOpenHelper {
         Log.d(TAG, "Database: constructor called");
     }
 
-    //tabellen aanmaken
+    /**
+     * Deze methode zorgt voor het aanmaken van de tabellen en wordt aangeroepen bij het 1e keer aanmaken van de database
+     * en bij het verhogen van het versienummer.
+     * @param sqLiteDatabase database object
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON");
@@ -201,7 +208,7 @@ public class Database extends SQLiteOpenHelper {
                 "REFERENCES " + AUTOINFO_TABEL_NAAM + "(" + AUTOINFO_KOLOM_KENTEKEN + ")," +
                 "UNIQUE(" + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_GEBRUIKERSNAAM + ") )");
 
-//tabel AanmeldingRit
+        //tabel AanmeldingRit
         sqLiteDatabase.execSQL("CREATE TABLE " + AANMELDING_TABEL_NAAM + "(" +
                 AANMELDING_KOLOM_CARPOOLCATEGORIE + " TEXT, " +
                 AANMELDING_KOLOM_DATUM + " TEXT, " +
@@ -211,6 +218,7 @@ public class Database extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + AANMELDING_KOLOM_GEBRUIKERSNAAM + ", " + AANMELDING_KOLOM_DATUM + ", " + AANMELDING_KOLOM_RITID + ") " +
                 "REFERENCES " + RITINFO_TABEL_NAAM + "(" + RITINFO_KOLOM_GEBRUIKERSNAAM + ", " + RITINFO_KOLOM_DATUM + ", " + RITINFO_KOLOM_RITNUMMER + ") )");
 
+        //tabel ritgeschiedenis
         sqLiteDatabase.execSQL("CREATE TABLE " + RITINFOGEREDEN_TABEL_NAAM + "( " +
                 RITINFOGEREDEN_KOLOM_GEBRUIKERSNAAM + " TEXT, " +
                 RITINFOGEREDEN_KOLOM_OPSTAPPLAATS + " TEXT NOT NULL, " +
@@ -224,6 +232,13 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Deze methode wordt aangeroepen bij het verhogen van het versienummer en zorgt ervoor dat de tabellen die aangemaakt waren in
+     * de vorige versie verwijdert worden. Daarna wordt oncreate aangeroepen en worden de tabellen opnieuw aangemaakt.
+     * @param sqLiteDatabase database object
+     * @param i versienummer oud
+     * @param i1 nieuw  versienummer
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
@@ -235,12 +250,16 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE " + AUTOINFO_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + BEDRIJFRANG_TABEL_NAAM);
         sqLiteDatabase.execSQL("DROP TABLE " + BWC_TABEL_NAAM);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "  + RITINFOGEREDEN_TABEL_NAAM);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RITINFOGEREDEN_TABEL_NAAM);
 
         onCreate(sqLiteDatabase);
 
     }
 
+    /**
+     * Deze methode geeft een lijst met beloningen zodat deze getoond kunnen worden in de giftshop.
+     * @return ArrayList<BeloningWaardeCredit> die de beloningen uit de giftshop bevat.
+     */
     public ArrayList<BeloningWaardeCredit> geefAlleBeloningen() {
 
         ArrayList<BeloningWaardeCredit> beloningen = new ArrayList<>();
@@ -301,6 +320,11 @@ public class Database extends SQLiteOpenHelper {
         return ritInfoArrayList;
     }
 
+    /**
+     * Deze methode voegt de beloning die meegegeven wordt als parameter toe aan de giftshop.
+     * @param beloningWaardeCredit Het beloning object dat ingevoerd moet worden in de database.
+     * @return Geeft een boolean terug, true als het gelukt is om de beloning toe te voegen, false als dit niet gelukt is.
+     */
     public boolean insertBeloning(BeloningWaardeCredit beloningWaardeCredit) {
 
         Log.d(TAG, "insertBeloning: aangeroepen");
@@ -374,9 +398,11 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-
-
-        public void createTestData(){
+    /**
+     * Deze methode zorgt ervoor dat er testdata van beloningobjecten in de database ingevoerd wordt zodat er
+     * beloningen in de giftshop zitten die de gebruiker kan kopen en/of bekijken.
+     */
+    public void createTestData() {
 
 
         Log.d(TAG, "createTestData: Called");
@@ -409,6 +435,11 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Deze methode maakt beloning objecten als testdata aan en stopt deze in een arraylist zodat de lijst in de
+     * methode createTestdata aan de database toegevoegd kan worden.
+     * @return ArrayList<BeloningWaardeCredit> lijst met beloning objecten die opgehaald wordt in de methode createTestdata.
+     */
     public ArrayList<BeloningWaardeCredit> genereerBeloningen() {
 
         ArrayList<BeloningWaardeCredit> beloningen = new ArrayList<>();
@@ -437,6 +468,11 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Deze methode zorgt voor het toevoegen van een gekochte beloning bij de juiste gebruiker.
+     * @param medewerkerBeloning Object waarin gegevens van de beloning en gebruiker opgeslagen zijn.
+     * @return Geeft true als het toevoegen van het object gelukt is, false als het niet gelukt is.
+     */
     public boolean insertMedewerkerBeloning(MedewerkerBeloning medewerkerBeloning) {
 
         Log.d(TAG, "insertMedewerkerBeloning: aangeroepen");
@@ -463,6 +499,11 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Deze methode zorgt voor het ophalen van alle beloningen die de ingelogde gebruiker gekocht heeft.
+     * @param gebruikersnaam De gebruikersnaam van de ingelogde gebruiker.
+     * @return ArrayList<MedewerkerBeloning> Lijst met alle beloningen die de medewerker gekccht heeft.
+     */
     public ArrayList<MedewerkerBeloning> geefAlleBeloningenMedewerker(String gebruikersnaam) {
 
         Log.d(TAG, "geefAlleBeloningenMedewerker: aangeroepen");
@@ -494,6 +535,11 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Deze methode zorgt voor het verwijderen van een gekochte beloning.
+     * @param transactienummer Het transactienummer van de gekochte beloning. Dit is de primary key in de database tabel en aan
+     *                         de hand van dit nummer kan de juiste beloning verwijdert worden.
+     */
     public void verwijderBeloning(int transactienummer) {
 
         Log.d("Database", "transactienummer: " + transactienummer);
@@ -580,6 +626,13 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Deze methode zorgt ervoor dat de credits die de gebruiker te besteden heeft, geupdatet worden als de gebruiker
+     * een beloning gekocht heeft.
+     * @param creditaantal Het nieuwe creditaantal dat het oude creditaantal in de database moet vervangen.
+     * @param gebruikersnaam De gebruikersnaam van de ingelogde gebruiker. Deze wordt meegestuurd zodat het creditaantal van de juiste gebruiker
+     *                       geupdate kan worden.
+     */
     public void updateCreditTeBesteden(int creditaantal, String gebruikersnaam) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -798,42 +851,42 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(querry);
     }
 
-    public ArrayList<BedrijfRang> geefBedrijven(){
+    public ArrayList<BedrijfRang> geefBedrijven() {
         ArrayList<BedrijfRang> bedrijven = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String querry = "SELECT * FROM " + BEDRIJFRANG_TABEL_NAAM;
         Cursor cursor = sqLiteDatabase.rawQuery(querry, null);
         cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
-         BedrijfRang bedrijfRang = new BedrijfRang(cursor.getString(cursor.getColumnIndex(BEDRIJFRANG_KOLOM_BEDRIJFSNAAM)), 0);
-         bedrijven.add(bedrijfRang);
+        while (!cursor.isAfterLast()) {
+            BedrijfRang bedrijfRang = new BedrijfRang(cursor.getString(cursor.getColumnIndex(BEDRIJFRANG_KOLOM_BEDRIJFSNAAM)), 0);
+            bedrijven.add(bedrijfRang);
         }
 
         return bedrijven;
     }
 
-    public int geefRitInfoOpbasisVanGebruikersnaamEnDatum(String gebruikersnaam, String datum){
+    public int geefRitInfoOpbasisVanGebruikersnaamEnDatum(String gebruikersnaam, String datum) {
         int ritnummer = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String querry = "SELECT ritnummer FROM "+ RITINFO_TABEL_NAAM + " WHERE " + "Gebruikersnaam = '" + gebruikersnaam
+        String querry = "SELECT ritnummer FROM " + RITINFO_TABEL_NAAM + " WHERE " + "Gebruikersnaam = '" + gebruikersnaam
                 + "' AND Datum = '" + datum + "';";
 
         Cursor cursor = sqLiteDatabase.rawQuery(querry, null);
         cursor.moveToFirst();
         ritnummer = cursor.getInt(cursor.getColumnIndex(RITINFO_KOLOM_RITNUMMER));
-        return  ritnummer;
+        return ritnummer;
 
     }
 
     public boolean CheckOfAlAangemeldRit(int ritnummer, String gebruikersnaam, String datum) {
         boolean isAlAangemelden = false;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String querry = "SELECT * FROM " + AANMELDING_TABEL_NAAM + " WHERE " +  " ritnummer = " + ritnummer + " AND gebruikersnaam = '" + gebruikersnaam + "' AND datum = '" + datum + "';";
+        String querry = "SELECT * FROM " + AANMELDING_TABEL_NAAM + " WHERE " + " ritnummer = " + ritnummer + " AND gebruikersnaam = '" + gebruikersnaam + "' AND datum = '" + datum + "';";
         Cursor cursor = sqLiteDatabase.rawQuery(querry, null);
-        if(cursor.getCount() >= 1)
+        if (cursor.getCount() >= 1)
             isAlAangemelden = true;
 
-        return  isAlAangemelden;
+        return isAlAangemelden;
     }
 
 

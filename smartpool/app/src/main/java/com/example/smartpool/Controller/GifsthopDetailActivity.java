@@ -23,7 +23,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-
+/**
+ * Deze klasse zorgt ervoor dat de gebruiker detailinformatie over een aangeklikte beloning in de giftshop
+ * kan bekijken. Ook zorgt deze klasse ervoor dat de gebruiker een beloning kan kopen als deze genoeg credits heeft.
+ * @see GiftshopFragment
+ * @author Inge
+ *
+ */
 public class GifsthopDetailActivity extends AppCompatActivity {
 
     private Database db = new Database(this);
@@ -36,8 +42,10 @@ public class GifsthopDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.giftshop_detail_activity);
 
+        //beloning object ophalen waar op geklikt is
         Bundle extras = getIntent().getExtras();
         final BeloningWaardeCredit bwc = (BeloningWaardeCredit) extras.getSerializable("Beloning");
+        //Gebruikersnaam van de ingelogde gebruiker ophalen om te checken of deze genoeg credits heeft om de beloning te kunnen kopen.
         String gebruikersnaamIngelogd = extras.getString("Gebruikersnaam");
 
         Log.d("Giftshopdetail", "gebruikersnaam ingelogd: " + gebruikersnaamIngelogd);
@@ -100,7 +108,6 @@ public class GifsthopDetailActivity extends AppCompatActivity {
 
                 } else {
 
-                    //Snackbar snackbar = Snackbar.make(view, "Onvoldoende credits", Snackbar.LENGTH_LONG);
                     Toast.makeText(getApplicationContext(), "Onvoldoende credits", Toast.LENGTH_LONG).show();
 
                 }
@@ -110,9 +117,15 @@ public class GifsthopDetailActivity extends AppCompatActivity {
 
     }
 
-    //methode om kortingscode te genereren, controle duplicates??
+    /**
+     * Deze methode zorgt voor het genereren van een alfanumerieke string die gebruikt wordt als kortingscode om de beloning
+     * mee te kunnen inwisselen.
+     * @param length De lengte van de string die gegenereerd moet worden.
+     * @return Geeft een alfanumerieke string terug, zodat deze bij het kopen van de beloning toegevoegd kan worden in de database.
+     */
     public String maakKortingsCode(int length) {
 
+        //De karakters die voor mogen komen in de string.
         String candidateChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
         StringBuilder sb = new StringBuilder();

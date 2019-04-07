@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         db.createTestData();
-
         db.checkRitAanmeldingen();
 
         Toolbar toolbar = findViewById(R.id.toolbar);

@@ -19,12 +19,22 @@ import java.util.ArrayList;
 
 public class
 
+        /**
+         * * Custom adapter die ervoor zorgt dat de lijstitems in de recyclerview gevuld worden met de beloning objecten uit de database
+         * die weergegeven moeten worden in de giftshop.
+         * @author Inge
+         * @see GiftshopFragment
+         */
 AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHolder> {
 
     private ArrayList<BeloningWaardeCredit> mDataset;
     private Context mContext;
     private String gebruikersnaam;
 
+    /**
+     * Klasse die de layout beschrijft van de viewholder die gemaakt moet worden. Haalt referenties van de layout nodes van de
+     * list item waarin de data uit de dataset weergegeven moet worden.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         //view (list_row_item) die de items bevat die in de listview moeten komen
@@ -36,6 +46,11 @@ AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHolder> {
         public TextView tvWaardeBeloning;
         public TextView tvCreditAantal;
 
+
+        /**
+         * Constructor voor klasse viewholder
+         * @param itemView view die de items bevat die in de listview moeten komen.
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.view = itemView;
@@ -49,6 +64,11 @@ AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHolder> {
 
         }
 
+        /**
+         * Methode die ervoor zorg dat het object waar op geklikt is in de lijst doorgegeven wordt aan
+         * GiftshopDetailActivity.
+         * @param view View waar op geklikt wordt.
+         */
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
@@ -65,25 +85,38 @@ AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHolder> {
         }
     }
 
-    //constructor voor adapter
-    public AdapterGiftshop(ArrayList<BeloningWaardeCredit> mDataset, Context mContext, String gebruikersnaam){
+    /**
+     * Constructor
+     * @param mDataset Lijst met beloningen uit de database die weergegeven moet worden in de recyclerview
+     * @param mContext Context waarin de lijst weergegeven moet worden
+     */
+    public AdapterGiftshop(ArrayList<BeloningWaardeCredit> mDataset, Context mContext, String gebruikersnaam) {
         this.mDataset = mDataset;
         this.mContext = mContext;
         this.gebruikersnaam = gebruikersnaam;
 
     }
 
-    //Nieuwe views maken (invoked by the layout manager)
+    /**
+     * Maakt een nieuwe viewholder als er geen viewholders zijn die de recyclerview opnieuw kan gebruiken.
+     * @param viewGroup De viewholder die geupdate moet worden om de waarden uit het object op de positie van de dataset weer te geven
+     * @param i De positie van het item in de dataset
+     * @return Geeft gemaakte viewholder terug
+     */
     @NonNull
     @Override
     public AdapterGiftshop.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.gifsthop_list_item, viewGroup,false);
+        View view = inflater.inflate(R.layout.gifsthop_list_item, viewGroup, false);
         ViewHolder vh = new ViewHolder(view);
         return vh;
     }
 
-    //inhoud van de view vervangen door waarden uit de dataset
+    /**
+     * Methode die de data uit de dataset in de bijbehorende layout uit het lijstitem zet voor de opgegeven positie in de recyclerview.
+     * @param viewHolder referentie van het lijstitem en de layout nodes die daarbij horen.
+     * @param position positie van het object in de lijst
+     */
     @Override
     public void onBindViewHolder(@NonNull AdapterGiftshop.ViewHolder viewHolder, int position) {
 
@@ -96,7 +129,10 @@ AdapterGiftshop extends RecyclerView.Adapter<AdapterGiftshop.ViewHolder> {
 
     }
 
-    //geeft grootte van de dataset terug
+    /**
+     * Geeft de grootte van de dataset
+     * @return int aantal objecten in de lijst.
+     */
     @Override
     public int getItemCount() {
         int size = mDataset.size();

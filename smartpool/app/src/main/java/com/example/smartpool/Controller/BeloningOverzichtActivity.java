@@ -15,6 +15,13 @@ import com.example.smartpool.Util.AdapterBeloningenOverzicht;
 
 import java.util.ArrayList;
 
+/**
+ * Deze klasse zorgt ervoor dat de beloningen die de gebruiker heeft gekocht in de giftshop
+ * te zien zijn in een overzicht op het scherm.
+ * @see AdapterBeloningenOverzicht
+ * @author Inge
+ *
+ */
 public class BeloningOverzichtActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -28,8 +35,9 @@ public class BeloningOverzichtActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beloningen_overzicht);
 
+        //Haal de gebruikersnaam van de ingelogde gebruiker op
         Bundle extras = getIntent().getExtras();
-        String gebruikersnaam = extras.getString("GebruikerIngelogd");
+        String gebruikersnaam = extras.getString("Gebruikersnaam");
 
         mDatabase = new Database(this);
 
@@ -55,7 +63,7 @@ public class BeloningOverzichtActivity extends AppCompatActivity {
 
         }
 
-
+        //Verander de titel in de actionbar naar eigen tekst
         this.setTitle("Mijn Beloningen");
 
     }
