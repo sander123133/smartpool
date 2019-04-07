@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_mijnritten:
                 intent = new Intent(this, AangemeldeRittenAcitivity.class);
+                intent.putExtra("Gebruikersnaam", gebruikersnaam);
                 startActivity(intent);
                 break;
             case R.id.nav_uitloggen:

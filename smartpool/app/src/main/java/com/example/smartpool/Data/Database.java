@@ -32,7 +32,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String DB_NAME = "smartpoolDB";
 
 
-    private static final int DB_V = 16;
+    private static final int DB_V = 17;
 
 
 
