@@ -25,6 +25,11 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+/**
+ * Custom adapter die ervoor zorgt dat de lijstitems in de recyclerview gevuld worden met de gekochte beloningen van de gebruiker.
+ * @author Inge
+ * @see BeloningOverzichtActivity
+ */
 public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBeloningenOverzicht.ViewHolder> {
 
     private ArrayList<MedewerkerBeloning> mDataset;
@@ -32,6 +37,10 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
     private Context mContext;
     private Database mDatabase;
 
+    /**
+     * Klasse die de layout beschrijft van de viewholder die gemaakt moet worden. Haalt referenties van de layout nodes van de
+     * list item waarin de data uit de dataset weergegeven moet worden.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         //view (list_row_item) die de items bevat die in de listview moeten komen
@@ -47,6 +56,11 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
         public TextView tvDownload;
 
 
+        /**
+         * Constructor voor klasse viewholder
+         * @param itemView view die de items bevat die in de listview moeten komen.
+         * @param listener onclicklistener voor knoppen in de viewholder.
+         */
         public ViewHolder(@NonNull View itemView, MyClicklistener listener) {
             super(itemView);
             this.view = itemView;
@@ -66,6 +80,10 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
 
         }
 
+        /**
+         * Methode die het klikken op de knoppen in de viewholder afhandelt.
+         * @param view View waarin de knoppen terug te vinden zijn.
+         */
         @Override
         public void onClick(View view) {
 
@@ -89,12 +107,22 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
         }
     }
 
-    //constructor voor adapter
+    /**
+     * Constructor
+     * @param mDataset Lijst met gekochte beloningen van de grbuiker die weergegeven moet worden in de recyclerview
+     * @param mContext Context waarin de lijst weergegeven moet worden
+     */
     public AdapterBeloningenOverzicht(ArrayList<MedewerkerBeloning> mDataset, Context mContext) {
         this.mDataset = mDataset;
         this.mContext = mContext;
     }
 
+    /**
+     * Maakt een nieuwe viewholder als er geen viewholders zijn die de recyclerview opnieuw kan gebruiken.
+     * @param viewGroup De viewholder die geupdate moet worden om de waarden uit het object op de positie van de dataset weer te geven
+     * @param i De positie van het item in de dataset
+     * @return Geeft gemaakte viewholder terug
+     */
     @NonNull
     @Override
     public AdapterBeloningenOverzicht.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -144,6 +172,11 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
         return vh;
     }
 
+    /**
+     * Methode die de data uit de dataset in de bijbehorende layout uit het lijstitem zet voor de opgegeven positie in de recyclerview.
+     * @param viewHolder referentie van het lijstitem en de layout nodes die daarbij horen.
+     * @param position positie van het object in de lijst
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
 
@@ -156,6 +189,10 @@ public class AdapterBeloningenOverzicht extends RecyclerView.Adapter<AdapterBelo
 
     }
 
+    /**
+     * Geeft de grootte van de dataset
+     * @return int aantal objecten in de lijst.
+     */
     @Override
     public int getItemCount() {
         int size = mDataset.size();

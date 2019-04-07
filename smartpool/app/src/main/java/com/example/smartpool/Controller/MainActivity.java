@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         db.createTestData();
-
         db.checkRitAanmeldingen();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -143,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_mijnbeloningen:
                 intent = new Intent(this, BeloningOverzichtActivity.class);
                 intent.putExtra("Gebruikersnaam", gebruikersnaam);
+                startActivity(intent);
                 break;
         }
 
