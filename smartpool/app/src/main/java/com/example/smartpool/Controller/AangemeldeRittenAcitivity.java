@@ -11,7 +11,9 @@ import com.example.smartpool.R;
 import com.example.smartpool.Util.ApdapterAangemeldeRitten;
 
 import java.util.ArrayList;
-
+/**
+ * gemaakt door Sander de Nooijer
+ */
 public class AangemeldeRittenAcitivity extends AppCompatActivity {
 
     @Override

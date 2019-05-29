@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         bLogin = (Button) findViewById(R.id.bLogin);
-
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

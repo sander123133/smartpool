@@ -21,10 +21,15 @@ import com.example.smartpool.Util.Utility;
 
 import java.util.ArrayList;
 
+/**
+ * gemaakt door Sander de Nooijer
+ */
 public class RitinformatieActivity_detailview  extends AppCompatActivity {
 
 
-
+    /**
+     * Bouwt het ritinformatie detailview scherm.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

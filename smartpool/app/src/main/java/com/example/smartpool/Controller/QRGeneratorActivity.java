@@ -18,7 +18,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 /**
- * Created by Gebruiker on 8-12-2017.
+ * Created by Sander on 3-16-2019.
+ * QR Codegenerator
+ *
  */
 
 public class QRGeneratorActivity extends AppCompatActivity {
@@ -30,6 +32,11 @@ public class QRGeneratorActivity extends AppCompatActivity {
 
     public final static int QRcodeWidth = 500 ;
     Bitmap bitmap ;
+
+    /**
+     * deze methode maakt een QR code op basis van de aanmeldingen van het vorige scherm.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +61,11 @@ public class QRGeneratorActivity extends AppCompatActivity {
             }).start();
         }
 
-
+    /**
+     * Deze methode zet een String om naar een QR code Image
+     * @param Value is de meegegeven String
+     * @return een Bitmap die kan worden gegeven in de vorm vaan een QR code
+     */
     Bitmap TextToImageEncode(String Value) throws WriterException {
         BitMatrix bitMatrix;
         try {
