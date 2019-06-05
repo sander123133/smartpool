@@ -79,7 +79,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         meldaanAlsBackupBtn.setOnClickListener(v -> {
 
             if(!database.CheckOfAlAangemeldRit(ritInfo.getRitnummer(), gebruikersnaam, ritInfo.getDatum())) {
-                database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.MEERIJDER, ritInfo.getRitnummer()));
+                database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.BACKUP_BESTUUDER, ritInfo.getRitnummer()));
             }
             else {
                 Toast.makeText(this, "u bent al aangemelden", Toast.LENGTH_LONG);
@@ -91,7 +91,7 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         meldaanAlsMeerijder.setOnClickListener(v -> {
 
             if(!database.CheckOfAlAangemeldRit(ritInfo.getRitnummer(), gebruikersnaam, ritInfo.getDatum())) {
-                database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.BACKUP_BESTUUDER, ritInfo.getRitnummer()));
+                database.insertAanmelding(new RitAanmelding((String) datumTxt.getText(), gebruikersnaam, Carpoolcategorie.MEERIJDER, ritInfo.getRitnummer()));
             }
             else {
                 Toast.makeText(this, "u bent al aangemelden", Toast.LENGTH_LONG);
@@ -102,12 +102,13 @@ public class RitinformatieActivity_detailview  extends AppCompatActivity {
         });
 
         ritVoltooidBtn.setOnClickListener(v -> {
+            super.finish();
             StringBuilder dataString = new StringBuilder();
             dataString.append("{[");
             for(int index = 0; index < medewerkerinfos.size(); index++){
                 dataString.append("{");
-                dataString.append("gebruikersnaam: " + medewerkerinfos.get(index).getGebruikersnaam() + ", ");
-                dataString.append("carpoolcategorie: " + medewerkerinfos.get(index).getCarpoolcategorie());
+                dataString.append("gebruikersnaam: " + '"' + medewerkerinfos.get(index).getGebruikersnaam() + '"' + ", ");
+                dataString.append("carpoolcategorie: " + '"' + medewerkerinfos.get(index).getCarpoolcategorie() + "'");
                 if(!(index == medewerkerinfos.size() - 1)) {
                     dataString.append("}, ");
                 }
